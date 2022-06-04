@@ -16,8 +16,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TaskIcon from '@mui/icons-material/Task';
@@ -25,7 +23,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import TodoList from '../todolist/TodoList';
+
+
+import { useContext } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Context from '../index';
+import { observer } from 'mobx-react-lite';
+import { authRoutes } from '../routes';
 
 const drawerWidth = 240;
 
@@ -50,7 +54,7 @@ const closedMixin = (theme) => ({
   },
 });
 
-export const DrawerHeader = styled('div')(({ theme }) => ({
+const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
@@ -96,21 +100,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-function iconListF(num){
-  if(num===0) {
-    return <BusinessCenterIcon/>
-  }
-  else if(num===1) {
-    return <TaskIcon/>
-  }
-  else {
-    return <PersonIcon/>
-  }
-}
-
-export function SideBar() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+const AppRouter = observer ( () => {
+    const theme = useTheme();
+    const [open, setOpen] = React.useState(false);
+    
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -119,6 +112,9 @@ export function SideBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const { user } = useContext(Context);
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -151,8 +147,21 @@ export function SideBar() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Мои проекты', 'Мои задачи', 'Сотрудники'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          {[
+              {
+                  name: 'Мои проекты',
+                  icon: <BusinessCenterIcon/>
+                }, 
+              {
+                  name: 'Мои задачи',
+                  icon: <TaskIcon/>
+                }, 
+              {
+                  name: 'Сотрудники',
+                  icon: <PersonIcon/>
+                }
+            ].map(({name, icon}) => (
+            <ListItem key={name} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -167,20 +176,19 @@ export function SideBar() {
                     justifyContent: 'center',
                   }}
                 >
-                  {iconListF(index)}
-                  {/* {index % 2 === 0 ? <PersonIcon />&&<BusinessCenterIcon/> : <TaskIcon />} */}
+             
+                  { icon }
                   
                   
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={name} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {['Настройки'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem key={'Настройки'} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -197,15 +205,14 @@ export function SideBar() {
                 >
                   <SettingsIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={'Настройки'} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          ))}
         </List>
         
         <List>
-          {['Выйти'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block',position:'absolute',top:300}}>
+          
+            <ListItem key={'Выйти'} disablePadding sx={{ display: 'block',position:'absolute',top:300}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -222,17 +229,24 @@ export function SideBar() {
                 >
                   <LogoutIcon/>
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={'Выйти'} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          ))}
+          
         </List>
-
       </Drawer>
-      {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-      </Box> */}
+        <Routes>
+                {user.isAuth && authRoutes.map( ({path, Component}) =>
+                    <Route key={path} path={path} element={<Component />}/>
+                )}
+                
+                <Route path="*" element={<Navigate to="/task"/>}/>
+        </Routes>
+      </Box>
     </Box>
   );
-}
+})
 
+export default AppRouter;
