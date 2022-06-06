@@ -16,6 +16,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import LogoutIcon from '@mui/icons-material/Logout';
 
+import { NavLink } from 'react-router-dom';
+import { PROJECTS_ROUTE, TASKS_ROUTE } from '../../consts/consts';
 
 const drawerWidth = 240;
 
@@ -80,19 +82,22 @@ const Drawer = ({ open, handleDrawerClose }) => {
                 {[
                     {
                         name: 'Мои проекты',
-                        icon: <BusinessCenterIcon/>
+                        icon: <BusinessCenterIcon/>,
+						route: PROJECTS_ROUTE
                         }, 
                     {
                         name: 'Мои задачи',
-                        icon: <TaskIcon/>
+                        icon: <TaskIcon/>,
+						route: TASKS_ROUTE
                         }, 
                     {
                         name: 'Сотрудники',
-                        icon: <PersonIcon/>
+                        icon: <PersonIcon/>,
+						route: TASKS_ROUTE
                         }
-                    ].map(({name, icon}) => (
+                    ].map(({name, icon, route}) => (
                     <ListItem key={name} disablePadding sx={{ display: 'block' }}>
-                    <ListItemButton
+                    <NavLink to={route} style={ { textDecoration: 'none' } }><ListItemButton
                         sx={{
                         minHeight: 48,
                         justifyContent: open ? 'initial' : 'center',
@@ -111,8 +116,14 @@ const Drawer = ({ open, handleDrawerClose }) => {
                         
                         
                         </ListItemIcon>
-                        <ListItemText primary={name} sx={{ opacity: open ? 1 : 0 }} />
+
+                        <ListItemText 
+							primary={ name } 
+							sx={ { opacity: open ? 1 : 0 } } 
+						/>
+						
                     </ListItemButton>
+					</NavLink>
                     </ListItem>
                 ))}
                 </List>
