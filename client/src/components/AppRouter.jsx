@@ -6,26 +6,33 @@ import { DrawerHeader } from './drawer/Drawer';
 
 import Context from '../index';
 import { observer } from 'mobx-react-lite';
-import { authRoutes } from '../routes';
+import { authRoutes, publicRoutes } from '../routes';
 
 
 const AppRouter = observer ( () => {
   const { user } = useContext(Context);
 
-  return (
+  return user.isAuth ? (
     <Box sx={{ display: 'flex' }}>
       <Sidebar />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Routes>
-                {user.isAuth && authRoutes.map( ({path, Component}) =>
+                {authRoutes.map( ({path, Component}) =>
                     <Route key={path} path={path} element={<Component />}/>
                 )}
                 
-                <Route path="*" element={<Navigate to="/task"/>}/>
+                <Route path="*" element={<Navigate to="/projects"/>}/>
         </Routes>
       </Box>
     </Box>
+  ) : (
+	  <Routes>
+		  {publicRoutes.map(({ path, Component }) => 
+				<Route key={path} path={path} element={<Component />}/>
+			)}
+			<Route path="*" element={ <Navigate to='/login' />} />
+	  </Routes>
   );
 })
 
