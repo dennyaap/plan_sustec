@@ -120,7 +120,7 @@ const tasks = [
   createData('Купить 10 мониторов apple', '14.06.22', 'Виктор Васаби', 'Выполнена', '6.06.22'),
 ];
 
-export default function TodoList() {
+export default function TaskList() {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
