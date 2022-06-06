@@ -115,7 +115,7 @@ Row.propTypes = {
   }).isRequired,
 };
 
-const rows = [
+const tasks = [
   createData('Купить 10 компьютеров apple', '12.06.22', 'Мария Вайз', 'Активна', '8.06.22'),
   createData('Купить 10 мониторов apple', '14.06.22', 'Виктор Васаби', 'Выполнена', '6.06.22'),
 ];
@@ -135,8 +135,8 @@ export default function TodoList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {tasks.map(( task ) => (
+            <Row key={task.name} row={task} />
           ))}
         </TableBody>
       </Table>
