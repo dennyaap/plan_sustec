@@ -6,9 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { observer } from 'mobx-react-lite';
 import Context from '../../index';
 
-const ProjectList = () => {
+const ProjectList = observer (() => {
 	const { project } = useContext( Context );
 	
 
@@ -32,13 +33,13 @@ const ProjectList = () => {
                 {project.name}
               </TableCell>
               <TableCell align="right">{project.createdAt}</TableCell>
-              <TableCell align="right">{project.status}</TableCell>
+              <TableCell align="right">{project.statusId}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
 	);
-}
+});
 
 export default ProjectList;

@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx';
 export default class UserStore {
     constructor() {
         this._isAuth = false;
-        this._user = {};
+        this._currentUser = {};
         makeAutoObservable(this);
     }
 
@@ -11,15 +11,15 @@ export default class UserStore {
     setIsAuth(bool){
         this._isAuth = bool;
     }
-    setUser(user){
-        this._user = user;
+    setUser(currentUser){
+        this._currentUser = currentUser;
     }
 
     //Computed functions - вызываются в том случае, если переменная внутри компонента была изменена
     get isAuth() {
         return this._isAuth;
     }
-    get user() {
-        return this._user;
+    get currentUser() {
+        return this._currentUser;
     }
 }
