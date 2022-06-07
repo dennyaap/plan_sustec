@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import Context from './index';
 import { check } from './http/userAPI';
 import Spinner from 'react-bootstrap/Spinner'
+import { fetchProjects } from './http/projectAPI';
 
 const App = observer( () => {
 	const { user } = useContext( Context );
@@ -13,7 +14,7 @@ const App = observer( () => {
 	useEffect( () => {
 		setTimeout( () => {
 			check().then( data => {
-				user.setUser(true);
+				user.setUser(data);
 				user.setIsAuth(true);
 			}).finally( () => setLoading( false ) )
 		}, 1000);
