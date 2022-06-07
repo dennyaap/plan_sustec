@@ -31,7 +31,7 @@ class ProjectController {
         }
     }
     async getAll(req, res){
-        let {userId, statusId, limit, page} = req.query;
+        let {userId, statusId, limit, page} = req.body;
         page = page || 1;
         limit = limit || 9;
         let offset = page * limit - limit;
