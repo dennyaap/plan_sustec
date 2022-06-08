@@ -1,5 +1,5 @@
 import { PROJECTS_ROUTE, TASKS_ROUTE, LOGIN_ROUTE } from './consts/consts';
-import Projects from './pages/Projects';
+import Projects from './pages/projects/Projects';
 import Tasks from './pages/Tasks';
 import Auth from './pages/auth/Auth';
 
