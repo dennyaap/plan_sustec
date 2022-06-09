@@ -9,23 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { observer } from 'mobx-react-lite';
 import Context from '../../index';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import { Box } from '@mui/system';
+import StatusSelect from '../select/StatusSelect';
+
 
 const ProjectList = observer(() => {
   const { project } = useContext(Context);
-
-
-  const [status, setStatus] = React.useState('');
-
-  const changeStatus = (event) => {
-    setStatus(event.target.value);
-    console.log(event.target.value);
-  }
-
 
   return (
     <TableContainer component={Paper}>
@@ -49,33 +37,7 @@ const ProjectList = observer(() => {
               <TableCell align="center">{project.createdAt}</TableCell>
               {/* <TableCell align="right">{project.statusId}</TableCell> */}
               <TableCell sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Box sx={{ width: 140, }}>
-                  <FormControl fullWidth >
-                    <InputLabel id="status-label">Status</InputLabel>
-                    <Select sx={{ borderRadius: 60, fontSize: '12pt' }} labelId='status-label' label='Status' value={status} onChange={changeStatus}>
-                      {
-                        [
-                          {
-                            statusName:'Выполнено',
-                            statusValue:1
-                          },
-                          {
-                            statusName:'Активно',
-                            statusValue:0
-                          },
-                          {
-                            statusName:'Завершено',
-                            statusValue:-1
-                          }
-                        ].map(({statusName,statusValue})=>(
-                          <MenuItem value={statusValue}>{statusName}</MenuItem>
-                        ))
-                      }
-                    </Select>
-                  </FormControl>
-                </Box>
-
-
+                  <StatusSelect/>
               </TableCell>
             </TableRow>
           ))}
