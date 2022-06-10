@@ -1,28 +1,20 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Box } from '@mui/material';
 
-export default function StatusSelect() {
+export default function StatusSelect({ colors, statusList }) {
 
-    const [status, setStatus] = React.useState('');
+    const [status, setStatus] = useState(0);
 
     const changeStatus = (event) => {
         setStatus(event.target.value);
-        console.log(event.target.value);
     }
-
-    const changeColor = (value) => {
-        if (value === 1) {
-            return '#2ED47A'
-        }
-        else if (value === 0) {
-            return '#FFB946'
-        }
-        else return '#F7685B'
-    }
-
+	const changeColor = (status) => {
+		return colors[status]
+	}
+	
     return (
         <Box sx={{ width: 140, }}>
             <FormControl fullWidth>
@@ -46,20 +38,7 @@ export default function StatusSelect() {
                     }}
                 >
                     {
-                        [
-                            {
-                                statusName: 'Выполнено',
-                                statusValue: 1
-                            },
-                            {
-                                statusName: 'Активно',
-                                statusValue: 0
-                            },
-                            {
-                                statusName: 'Завершено',
-                                statusValue: -1
-                            }
-                        ].map(({ statusName, statusValue}) => (
+                       statusList.map(({ statusName, statusValue}) => (
                             <MenuItem key={statusName} value={statusValue}>{statusName}</MenuItem>
                         ))
                     }
