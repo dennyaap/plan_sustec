@@ -18,6 +18,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import { NavLink } from 'react-router-dom';
 import { PROJECTS_ROUTE, TASKS_ROUTE } from '../../consts/consts';
+import { useLocation } from 'react-router-dom';
+
 
 const drawerWidth = 240;
 
@@ -70,6 +72,8 @@ const DrawerStyle = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'o
 
 const Drawer = ({ open, handleDrawerClose }) => {
     const theme = useTheme();
+	const location = useLocation();
+
     return (
         <DrawerStyle variant="permanent" open={open}>
                 <DrawerHeader>
@@ -102,6 +106,7 @@ const Drawer = ({ open, handleDrawerClose }) => {
                         minHeight: 48,
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
+						color: location.pathname === route ? '#109CF1' : '#334D6E'
                         }}
                     >
                         <ListItemIcon
@@ -109,12 +114,10 @@ const Drawer = ({ open, handleDrawerClose }) => {
                             minWidth: 0,
                             mr: open ? 3 : 'auto',
                             justifyContent: 'center',
-                        }}
+							color: location.pathname === route ? '#109CF1' : '#C2CFE0'
+                        	}}
                         >
-                    
-                        { icon }
-                        
-                        
+                        	{ icon }
                         </ListItemIcon>
 
                         <ListItemText 
@@ -166,11 +169,12 @@ const Drawer = ({ open, handleDrawerClose }) => {
                             minWidth: 0,
                             mr: open ? 3 : 'auto',
                             justifyContent: 'center',
+							color: '#FE5050'
                         }}
                         >
                         <LogoutIcon/>
                         </ListItemIcon>
-                        <ListItemText primary={'Выйти'} sx={{ opacity: open ? 1 : 0 }} />
+                        <ListItemText primary={'Выйти'} sx={{ opacity: open ? 1 : 0, color: '#FE5050' }} />
                     </ListItemButton>
                     </ListItem>
                     <DrawerHeader />
