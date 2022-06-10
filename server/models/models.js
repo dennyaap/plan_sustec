@@ -22,6 +22,7 @@ const ProjectExecutor = sequelize.define('project_executor', {
 const ProjectStatus = sequelize.define('project_status', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
+	color: {type: DataTypes.STRING, unique: true, allowNull: false},
 });
 
 const ProjectRole = sequelize.define('project_role', {

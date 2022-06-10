@@ -8,3 +8,11 @@ export const fetchProjects = async (userId) => {
 	const { data } = await $authHost.post('api/project/userProjects', {userId});
 	return data;
 }
+export const fetchStatuses = async () => {
+	const { data } = await $host.get('api/projectStatus');
+	return data;
+}
+export const changeStatus = async ( {projectId, statusId} ) => {
+	const { data } = await $authHost.post('api/projectStatus/change', { projectId, statusId });
+	return data;
+}

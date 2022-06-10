@@ -10,25 +10,16 @@ import Paper from '@mui/material/Paper';
 import { observer } from 'mobx-react-lite';
 import Context from '../../index';
 import StatusSelect from '../select/StatusSelect';
+import { changeStatus } from '../../http/projectAPI';
 
 
 const ProjectList = observer( () => {
 	const { project } = useContext (Context);
-	const [ colors, setColors ] = useState ([ '#2ED47A', '#FFB946', '#F7685B' ]); //color status
-	const [ statusList, setStatusList ] = useState ([
-			{
-				statusName: 'Выполнено',
-				statusValue: 0
-			},
-			{
-				statusName: 'Активно',
-				statusValue: 1
-			},
-			{
-				statusName: 'Завершено',
-				statusValue: 2
-			}
-		]);
+
+	const changeProjectStatus = (data) => {
+		changeStatus(data);
+		console.log(data)
+	}
 
 	return (
 		<TableContainer component={ Paper }>
@@ -41,18 +32,18 @@ const ProjectList = observer( () => {
 			</TableRow>
 			</TableHead>
 			<TableBody>
-			{project.projects.map((project) => (
+			{project.projects.map(( project ) => (
 				<TableRow
-				key={project.name}
+				key={ project.name }
 				sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 				>
-				<TableCell align="center" component="th" scope="row">
-					{project.name}
+				<TableCell align="left" component="th" scope="row">
+					{ project.name }
 				</TableCell>
-				<TableCell align="center">{project.createdAt}</TableCell>
+				<TableCell align="center">{ project.createdAt }</TableCell>
 		
 				<TableCell sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-					<StatusSelect colors={colors} statusList={statusList} />
+					<StatusSelect projectId={ project.id } statusId={ project.statusId } changeProjectStatus={changeProjectStatus}/>
 				</TableCell>
 				</TableRow>
 			))}
