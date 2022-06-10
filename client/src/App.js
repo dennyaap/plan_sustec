@@ -4,28 +4,21 @@ import AppRouter from './components/AppRouter';
 import { observer } from 'mobx-react-lite';
 import Context from './index';
 import { check } from './http/userAPI';
-import Spinner from 'react-bootstrap/Spinner'
-import { fetchProjects } from './http/projectAPI';
+import SpinnerLoader from './components/UI/spinnerloader/SpinnerLoader';
 
 const App = observer( () => {
 	const { user } = useContext( Context );
 	const [ loading, setLoading ] = useState(true);
 
 	useEffect( () => {
-		setTimeout( () => {
-			check().then( data => {
-				user.setUser(data);
-				user.setIsAuth(true);
-			}).finally( () => setLoading( false ) )
-		}, 1000);
+		check().then( data => {
+			user.setUser(data);
+			user.setIsAuth(true);
+		}).finally( () => setLoading( false ) );
 	}, []);
 
 	if( loading ) {
-		return <Spinner 
-			animation={ 'border' } 
-			variant={ 'primary' }
-			style={ { position: "absolute", top: "50%", left: "50%", width: 120, height: 120 } }
-		/>
+		return <SpinnerLoader />
 	}
 
 	return (
