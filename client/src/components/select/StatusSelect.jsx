@@ -11,8 +11,9 @@ export default function StatusSelect({ projectId, statusId, changeProjectStatus 
 	const [ currentStatus, setStatus ] = useState(statusId);
 
 	const changeStatus = (e) => {
-		setStatus(e.target.value);
-		changeProjectStatus({projectId ,statusId: e.target.value}) //выводит 2 - так и должно быть
+		let statusId = e.target.value;
+		setStatus(statusId);
+		changeProjectStatus({ projectId , statusId })
 	}
 
     return (
@@ -35,6 +36,9 @@ export default function StatusSelect({ projectId, statusId, changeProjectStatus 
                         '&:after': {
                             display:'none'
                         },
+						'&:hover': {
+							opacity: '0.9'
+						},
                     }}
                 >
                     {

@@ -11,42 +11,32 @@ import { observer } from 'mobx-react-lite';
 import Context from '../../index';
 import StatusSelect from '../select/StatusSelect';
 import { changeStatus } from '../../http/projectAPI';
+import { PROJECT_STATUSES } from '../../consts/consts';
+import Project from '../project/Project';
 
 
 const ProjectList = observer( () => {
 	const { project } = useContext (Context);
-
-	const changeProjectStatus = (data) => {
-		changeStatus(data);
-		console.log(data)
-	}
-
+	
 	return (
 		<TableContainer component={ Paper }>
 		<Table sx={{ minWidth: 650 }} aria-label="simple table">
 			<TableHead>
 			<TableRow>
-				<TableCell align="center">Название</TableCell>
+				<TableCell align="center">№</TableCell>
+				<TableCell align="left">Название</TableCell>
 				<TableCell align="center">Дата создания</TableCell>
 				<TableCell align="center">Статус</TableCell>
 			</TableRow>
 			</TableHead>
 			<TableBody>
-			{project.projects.map(( project ) => (
-				<TableRow
-				key={ project.name }
-				sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-				>
-				<TableCell align="left" component="th" scope="row">
-					{ project.name }
-				</TableCell>
-				<TableCell align="center">{ project.createdAt }</TableCell>
-		
-				<TableCell sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-					<StatusSelect projectId={ project.id } statusId={ project.statusId } changeProjectStatus={changeProjectStatus}/>
-				</TableCell>
-				</TableRow>
-			))}
+			{project.projects.map(( project, index ) => 
+				<Project 
+					key={ project.id } 
+					project={ project } 
+					index={ index } 
+					
+				/>)}
 			</TableBody>
 		</Table>
 		</TableContainer>
