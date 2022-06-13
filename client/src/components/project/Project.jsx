@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import StatusSelect from '../select/StatusSelect';
 import { PROJECT_STATUSES } from '../../consts/consts';
 import { changeStatus } from '../../http/projectAPI';
+import IconButton from '@mui/material/IconButton';
+import IconDelete from '@mui/icons-material/Delete';
 
-const Project = ({ project, index }) => {
+
+const Project = ({ project, index, openModal, setSelectedProject }) => {
 	const [ backgroundColorStatus, setBackgroundColor ] = useState('');
 	const [ projectStatus, setProjectStatus ] = useState(project.statusId);
 
@@ -25,6 +27,12 @@ const Project = ({ project, index }) => {
 		let parsedDate = new Date(date);
 		return parsedDate.toLocaleDateString();
 	}
+
+	const selectProject = (selectedProject) => {
+		setSelectedProject(selectedProject);
+		openModal();
+	}
+	
 
 	return (
 		<TableRow
@@ -46,8 +54,13 @@ const Project = ({ project, index }) => {
 					<StatusSelect 
 						projectId={ project.id } 
 						statusId={ project.statusId } 
-						changeProjectStatus={changeProjectStatus}
+						changeProjectStatus={ changeProjectStatus }
 					/>
+				</TableCell>
+				<TableCell>
+					<IconButton sx={{ color: '#FE5B5B' }} onClick={ () => selectProject( project ) }>
+						<IconDelete/>
+					</IconButton>
 				</TableCell>
 		</TableRow>
 	);

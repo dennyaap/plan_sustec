@@ -60,6 +60,15 @@ class ProjectController {
         )
         return res.json( project )
     }
+	async destroy(req, res){
+		const { projectId } = req.body;
+		const project = await Project.destroy({
+			where: {
+				id: projectId
+			}
+		});
+		return res.json( project );
+	}
 }
 
 module.exports = new ProjectController();
