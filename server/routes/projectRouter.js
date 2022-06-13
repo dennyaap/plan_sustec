@@ -6,6 +6,7 @@ const checkRole = require('../middleware/checkRoleMiddleware');
 
 
 router.post('/', checkRole('ADMIN'), projectController.create);
+router.post('/destroy', checkRole('ADMIN'), projectController.destroy);
 router.post('/userProjects', projectController.getAll);
 router.get('/:id', projectController.getOne);
 
