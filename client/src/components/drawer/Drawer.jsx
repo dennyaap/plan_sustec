@@ -15,13 +15,12 @@ import TaskIcon from '@mui/icons-material/Task';
 import PersonIcon from '@mui/icons-material/Person';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Box } from '@mui/system';
-import { Avatar } from '@mui/material';
-import { Typography } from '@mui/material';
+
 
 import { NavLink } from 'react-router-dom';
 import { PROJECTS_ROUTE, TASKS_ROUTE } from '../../consts/consts';
 import { useLocation } from 'react-router-dom';
+import DrawerAvatar from '../draweravatar/DrawerAvatar';
 
 
 const drawerWidth = 240;
@@ -85,32 +84,9 @@ const Drawer = ({ open, handleDrawerClose }) => {
                 </IconButton>
             </DrawerHeader>
             <Divider />
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: '20px',
-                marginBottom: '20px',
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.0,
-            }}>
-                <Avatar
-                    src='https://sun9-84.userapi.com/s/v1/if2/oDsveymj8dNLm6BKVaIAs3EhfwpGUD92PPQwFbK2RT_AiwjZNaahjQpzbAOmWl_C4Shi70zmmzKoJjsZ3UHyDxS7.jpg?size=810x1080&quality=95&type=album' 
-                    sx={{
-                        width: '32px', height: '32px', bgcolor: '#4287f5', minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
-                        marginLeft:open ?'0px':'62px'
-                    }}>
-                    Da
-                </Avatar>
-                <Box sx={{ opacity: open ? 1 : 0 }}>
-                    <Typography>Дениска</Typography>
-                    <Typography sx={{ fontSize: '8pt', color: 'gray' }}>Dennya</Typography>
-                </Box>
-            </Box>
+           
             <List>
+				<DrawerAvatar open={open} />
                 {[
                     {
                         name: 'Мои проекты',
