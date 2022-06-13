@@ -44,7 +44,7 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
+        <TableCell >
           <IconButton
             aria-label="expand row"
             size="small"
@@ -53,16 +53,16 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align='center'>
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="center">{row.calories}</TableCell>
+        <TableCell align="center">{row.fat}</TableCell>
+        <TableCell align="center">{row.carbs}</TableCell>
+        <TableCell align="center">{row.protein}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6} >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
@@ -71,9 +71,9 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Название</TableCell>
-                    <TableCell>Исполнитель</TableCell>
-                    <TableCell align="right">Статус</TableCell>
+                    <TableCell align="left">Название</TableCell>
+                    <TableCell align="left">Исполнитель</TableCell>
+                    <TableCell align="left">Статус</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -83,7 +83,7 @@ function Row(props) {
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="left">{historyRow.amount}</TableCell>
                     
                     </TableRow>
                   ))}
@@ -126,12 +126,12 @@ export default function TaskList() {
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>Название</TableCell>
-            <TableCell align="right">Крайний срок</TableCell>
-            <TableCell align="right">Постановщик</TableCell>
-            <TableCell align="right">Статус</TableCell>
-            <TableCell align="right">Дата создания</TableCell>
+            <TableCell/>
+            <TableCell align='center'>Название</TableCell>
+            <TableCell align="center">Крайний срок</TableCell>
+            <TableCell align="center">Постановщик</TableCell>
+            <TableCell align="center">Статус</TableCell>
+            <TableCell align="center">Дата создания</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

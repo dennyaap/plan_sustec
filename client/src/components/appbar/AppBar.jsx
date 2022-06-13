@@ -32,7 +32,9 @@ const AppBar = styled(MuiAppBar, {
 const Appbar = ({ open, handleDrawerOpen }) => {
     return (
         <AppBar position="fixed" open={open}>
+                
                 <Toolbar>
+                
                 <IconButton 
                     color="inherit"
                     aria-label="open drawer"
