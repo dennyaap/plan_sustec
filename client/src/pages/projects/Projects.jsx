@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite';
 import Context from '../../index';
 import SpinnerLoader from '../../components/UI/spinnerloader/SpinnerLoader';
 import ModalDelete from '../../components/modaldelete/ModalDelete';
-import { TaskDialogButton } from '../../components/createDialogTaskButton/TaskDialogButton';
 import { destroyProject } from '../../http/projectAPI';
 import ListHeader from '../../components/listheader/ListHeader';
 
