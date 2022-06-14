@@ -17,8 +17,14 @@ const Projects = observer (() => {
 
 	const deleteProject = (currentProject) => {
 		setSelectedProject( currentProject );
-		destroyProject( selectedProject.id );
 		closeModal();
+
+		setLoading(true);
+		destroyProject( selectedProject.id )
+			.then( () => fetchProjects( user.currentUser.id ).then( data => {
+				project.setProjects( data.rows )
+			}).finally( () => setLoading(false))
+		);
 	}
 	const openModal = () => {
 		setIsOpen(true);
@@ -37,7 +43,7 @@ const Projects = observer (() => {
 			.then( () => fetchStatuses().then( data => {
 				project.setStatuses( data );
 			})).finally( () => setLoading( false ) );
-	}, [ selectedProject ] );
+	}, [] );
 	
 	if( loading ) {
 		return <SpinnerLoader />
