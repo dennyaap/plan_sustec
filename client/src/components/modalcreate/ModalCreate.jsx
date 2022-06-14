@@ -13,16 +13,13 @@ const ModalCreate = ({ isOpen, closeModal }) => {
 
 	return (
 		<Dialog open={ isOpen } onClose={closeModal}>
-		<DialogTitle>Создание задачи</DialogTitle>
+		<DialogTitle>Создание проекта</DialogTitle>
 		<DialogContent>
-			<DialogContentText>
-				Для создания задачи, введите ее название.
-			</DialogContentText>
 			<TextField
 				autoFocus
 				margin="dense"
 				id="name"
-				label="Название задачи"
+				label="Название проекта"
 				type="text"
 				fullWidth
 				variant="standard"

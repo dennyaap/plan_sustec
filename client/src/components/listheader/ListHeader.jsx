@@ -25,7 +25,7 @@ const ListHeader = () => {
 				}
 			}}
 		>
-			Создать задачу
+			Создать проект
 		</Button>
 
 		<ModalCreate isOpen={isOpen} closeModal={closeModal} />

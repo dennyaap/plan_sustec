@@ -19,6 +19,8 @@ const AppBar = styled(MuiAppBar, {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+	backgroundColor: '#fff',
+	boxShadow: 'none',
     ...(open && {
       marginLeft: drawerWidth,
       width: `calc(100% - ${drawerWidth}px)`,
@@ -36,7 +38,7 @@ const Appbar = ({ open, handleDrawerOpen }) => {
                 <Toolbar>
                 
                 <IconButton 
-                    color="inherit"
+                
                     aria-label="open drawer"
                     onClick={handleDrawerOpen}
                     edge="start"
@@ -47,10 +49,10 @@ const Appbar = ({ open, handleDrawerOpen }) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap component="div" >
+                <Typography variant="h6" noWrap component="div" sx={{color: '#109CF1'}}>
                 Plan Sustec
                 </Typography>
-                <IconButton sx={{color:'#fff',position:'absolute',right:10}}><NotificationsIcon/></IconButton>
+                <IconButton sx={{color:'#109CF1',position:'absolute',right:10}}><NotificationsIcon/></IconButton>
                 </Toolbar>
             </AppBar>
     );

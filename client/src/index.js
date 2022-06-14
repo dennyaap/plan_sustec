@@ -13,6 +13,7 @@ root.render(
 		project: new ProjectStore()
     }}
     >
+	
         <App />
     </Context.Provider>
 );
