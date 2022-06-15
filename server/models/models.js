@@ -7,6 +7,7 @@ const User = sequelize.define('users', {
     login: {type: DataTypes.STRING, unique: true},
     password: {type: DataTypes.STRING, unique: false},
     fullName: {type: DataTypes.STRING, unique: false},
+	hashtag: {type: DataTypes.STRING, unique: true},
     role: {type: DataTypes.STRING, unique: false, defaultValue: 'USER'},
 });
 

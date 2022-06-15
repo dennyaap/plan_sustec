@@ -3,13 +3,20 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const { User } = require('../models/models');
+const Hashids = require('hashids');
 
-const generateJwt = (id, login, fullName, role) => {
+const generateJwt = (id, login, fullName, hashtag, role) => {
     return jwt.sign(
-        {id, login, fullName, role}, 
+        {id, login, fullName, hashtag, role}, 
         process.env.SECRET_KEY,
         {expiresIn: '24h'}
     ); // ОБЪЕКТ payload - данные о пользователе | секретный ключ | опции сколько живет токен
+}
+
+const generateHashtag = (userId) => {
+	const hashids = new Hashids(process.env.HASHTAG_SALT);
+	const hashtag = hashids.encode(userId);
+	return hashtag;
 }
 
 class UserController {
@@ -27,8 +34,21 @@ class UserController {
         }
         const hashPassword = await bcrypt.hash(password, 5);
         const user = await User.create({ login, password: hashPassword, fullName, role });
-        // const basket = await Basket.create({userId: user.id});
-        const token = generateJwt(user.id, user.login, user.fullName, user.role);
+
+		const hashtag = generateHashtag(user.id);
+
+		const updateUser = await User.update(
+			{
+				hashtag
+			},
+			{
+				where: {
+					id: user.id
+				}
+			}
+		)
+
+        const token = generateJwt(user.id, user.login, user.fullName, hashtag, user.role);
         return res.json({ token });
     }   
     async login(req, res, next){
@@ -41,11 +61,11 @@ class UserController {
         if(!comparePassword){
             return next(ApiError.internal('Не правильный пароль'));
         }
-        const token = generateJwt(user.id, user.login, user.fullName, user.role);
+        const token = generateJwt(user.id, user.login, user.fullName, user.hashtag, user.role);
         return res.json({token});
     }
     async check(req, res, next){ //сгенерировать новый токен и отправить его обратно на клиент
-        const token = generateJwt(req.user.id, req.user.login, req.user.fullName, req.user.role)
+        const token = generateJwt(req.user.id, req.user.login, req.user.fullName, req.user.hashtag, req.user.role)
         return res.json({token})
     }
 }
