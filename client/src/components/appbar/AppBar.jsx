@@ -49,7 +49,7 @@ const Appbar = ({ open, handleDrawerOpen }) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap component="div" sx={{color: '#109CF1'}}>
+                <Typography noWrap component="div" sx={{color: '#109CF1', fontSize: 18, fontWeight: 600}}>
                 Plan Sustec
                 </Typography>
                 <IconButton sx={{color:'#109CF1',position:'absolute',right:10}}><NotificationsIcon/></IconButton>

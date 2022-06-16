@@ -22,7 +22,9 @@ const ListHeader = ({ addProject }) => {
 				backgroundColor: '#32E182',
 				'&:hover':{
 					backgroundColor: '#32E182',
-				}
+				},
+				fontSize: 13, fontWeight: 600,
+				textTransform: 'none'
 			}}
 		>
 			Создать проект

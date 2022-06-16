@@ -4,11 +4,11 @@ export default function GlobalStyleOverrides() {
   const theme = createTheme({       
     typography: {
       fontFamily: [
-        "'Poppins', Arial, sans-serif"
+       "'Poppins', sans-serif",
       ].join(','),         
-      body1: {
-        fontFamily: "'Poppins', Arial, sans-serif",
-      },
+    //   body1: {
+    //     fontFamily: "Arial, sans-serif",
+    //   },
     },
   });
 

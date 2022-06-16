@@ -44,10 +44,10 @@ const Project = ({ project, index, openModal, setSelectedProject }) => {
 				<TableCell align="center">
 					{ index + 1 }
 				</TableCell>
-				<TableCell align="left">
+				<TableCell align="left" sx={{color: '#323C47', fontWeight: 500}}>
 					{ project.name }
 				</TableCell>
-				<TableCell align="center">
+				<TableCell align="center" sx={{color: '#707683', fontWeight: 500}}>
 					 { parseDate(project.createdAt)} 
 				</TableCell>
 				<TableCell sx={{display: 'flex', justifyContent: 'center'}}>

@@ -23,11 +23,11 @@ const ProjectList = observer( ({ setSelectedProject, openModal, isLoading }) => 
 		<Table sx={{ minWidth: 650 }} aria-label="simple table">
 			<TableHead>
 			<TableRow>
-				<TableCell align="center">№</TableCell>
-				<TableCell align="left">Название</TableCell>
-				<TableCell align="center">Дата создания</TableCell>
-				<TableCell align="center">Статус</TableCell>
-				<TableCell align="center"></TableCell>
+				<TableCell align="center" sx={{color: '#8594A8'}}>№</TableCell>
+				<TableCell align="left" sx={{color: '#8594A8'}}>Название</TableCell>
+				<TableCell align="center" sx={{color: '#8594A8'}}>Дата создания</TableCell>
+				<TableCell align="center" sx={{color: '#8594A8'}}>Статус</TableCell>
+				<TableCell align="center" sx={{color: '#8594A8'}}></TableCell>
 			</TableRow>
 			</TableHead>
 			<TableBody>
