@@ -13,12 +13,11 @@ class ProjectController {
 
             const project = await Project.create({ name, userId, statusId });
 
-
             if(projectExecutors) {
-                executors = JSON.parse(projectExecutors); //данные через form data приходят в ввиде строки
+                const executors = JSON.parse(projectExecutors);
                 executors.forEach(executor => {
                     ProjectExecutor.create({
-                        userId: executor.id,
+                        userId: executor.userId,
                         projectId: project.id,
                         roleId: executor.roleId
                     })

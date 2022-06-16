@@ -32,9 +32,11 @@ const Projects = observer (() => {
 			})
 		).finally( () => setIsLoading(false));
 	}
-	const addProject = (name) => {
+	const addProject = ({name, executors}) => {
 		setIsLoading(true);
-		createProject({ name, userId: user.currentUser.id, statusId: 1 })
+		console.log(name);
+		console.log(executors)
+		createProject({ name, userId: user.currentUser.id, statusId: 1, projectExecutors: JSON.stringify(executors) })
 			.then( () => fetchProjects( user.currentUser.id ).then( data => {
 				project.setProjects( data.rows )
 			})

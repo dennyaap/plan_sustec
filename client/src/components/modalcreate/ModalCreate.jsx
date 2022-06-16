@@ -25,7 +25,7 @@ const ModalCreate = ({ isOpen, closeModal, addProject }) => {
 
 	const createProject = (name) => {
 		closeModal();
-		addProject(name);
+		addProject({name, executors});
 	}
 	const [ executors, setExecutors ] = useState([])
 
@@ -61,6 +61,7 @@ const ModalCreate = ({ isOpen, closeModal, addProject }) => {
 				fullWidth
 				variant="standard"
 				onChange={(e) => setName(e.target.value)}
+				value={name}
 			/>
 			
 			<Box sx={{marginBottom: 3, marginTop: 3}}>
