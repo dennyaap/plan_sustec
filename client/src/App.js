@@ -6,27 +6,33 @@ import Context from './index';
 import { check } from './http/userAPI';
 import SpinnerLoader from './components/UI/spinnerloader/SpinnerLoader';
 
-const App = observer( () => {
-	const { user } = useContext( Context );
-	const [ loading, setLoading ] = useState(true);
+import {  ThemeProvider} from '@mui/material/styles';
 
-	useEffect( () => {
-		check().then( data => {
+import GlobalStyleOverrides from './GlobalStyles';
+
+const App = observer(() => {
+	const { user } = useContext(Context);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		check().then(data => {
 			user.setUser(data);
 			user.setIsAuth(true);
-		}).finally( () => setLoading( false ) );
+		}).finally(() => setLoading(false));
 	}, []);
 
-	if( loading ) {
+	if (loading) {
 		return <SpinnerLoader />
 	}
 
 	return (
-		<div className="App">
-			<BrowserRouter>
-				<AppRouter />
-			</BrowserRouter>
-		</div>
+		<ThemeProvider theme={GlobalStyleOverrides()}>
+			<div className="App">
+				<BrowserRouter>
+					<AppRouter />
+				</BrowserRouter>
+			</div>
+		</ThemeProvider>
 	);
 });
 
