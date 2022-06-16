@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import ModalCreate from '../modalcreate/ModalCreate';
 
 
-const ListHeader = () => {
+const ListHeader = ({ addProject }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const openModal = () => {
@@ -28,7 +28,7 @@ const ListHeader = () => {
 			Создать проект
 		</Button>
 
-		<ModalCreate isOpen={isOpen} closeModal={closeModal} />
+		<ModalCreate isOpen={isOpen} closeModal={closeModal} addProject={addProject}/>
 	</Box>
 	);
 }

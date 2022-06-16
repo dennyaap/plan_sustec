@@ -20,3 +20,7 @@ export const destroyProject = async (projectId) => {
 	const { data } = await $authHost.post('api/project/destroy', { projectId });
 	return data;
 } 
+export const fetchRoles = async() => {
+	const { data } = await $host.get('api/projectRole');
+	return data;
+}

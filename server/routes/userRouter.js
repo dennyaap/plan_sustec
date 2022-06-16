@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/registration', UserController.registration);
 router.post('/login', UserController.login);
+router.post('/findOne', authMiddleware, UserController.findUser);
 router.get('/auth', authMiddleware, UserController.check);
 
 

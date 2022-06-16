@@ -18,3 +18,8 @@ export const check = async () => {
 	localStorage.setItem('token', data.token);
 	return jwt_decode(data.token);
 }
+
+export const findUser = async( hashtag ) => {
+	const { data } = await $authHost.post('api/user/findOne', { hashtag });
+	return data;
+}

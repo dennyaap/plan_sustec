@@ -68,6 +68,18 @@ class UserController {
         const token = generateJwt(req.user.id, req.user.login, req.user.fullName, req.user.hashtag, req.user.role)
         return res.json({token})
     }
+	async findUser(req, res, next){
+		let { hashtag } = req.body;
+		const user = await User.findOne({
+			where:{
+				hashtag
+			}
+		})
+		if(!user) {
+			return next(ApiError.internal('Пользователь с таким именем не найден'));
+		}
+		return res.json({userId: user.id, fullName: user.fullName});
+	}
 }
 
 module.exports = new UserController();
