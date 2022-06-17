@@ -1,4 +1,4 @@
-const {Project, ProjectExecutor} = require('../models/models');
+const {Project, ProjectExecutor, User} = require('../models/models');
 // const uuid = require('uuid');
 // const path = require('path');
 const ApiError = require('../error/ApiError');
@@ -35,17 +35,69 @@ class ProjectController {
         limit = limit || 9;
         let offset = page * limit - limit;
         let projects;
-        if(!userId && !statusId){
-            projects = await Project.findAndCountAll({limit, offset});
+        if (!userId && !statusId) {
+            projects = await Project.findAndCountAll({
+				limit, 
+				offset, 
+				include: [
+					{ 
+						model: ProjectExecutor 
+					}
+				]
+			}
+		);
         }
-        if(userId && !statusId){
-            projects = await Project.findAndCountAll({where: {userId}, limit, offset});
+        if (userId && !statusId) {
+            projects = await Project.findAndCountAll({
+				where: {
+					userId
+				}, 
+				limit, 
+				offset, 
+				include: [
+					{ 
+						model: ProjectExecutor,
+						include: [
+							{
+								model: User,
+								attributes: ['fullName']
+							}
+						] 
+					}
+				]
+			}
+		);
+		
         }
-        if(!userId && statusId){
-            projects = await Project.findAndCountAll({where: {statusId}, limit, offset});
+        if (!userId && statusId) {
+            projects = await Project.findAndCountAll({
+				where: {
+					statusId
+				}, 
+				limit, 
+				offset, 
+				include: [
+					{ 
+						model: ProjectExecutor 
+					}
+				]
+			}
+		);
         }
-        if(userId && statusId){
-            projects = await Project.findAndCountAll({where: {userId, statusId}, limit, offset});
+        if (userId && statusId) {
+            projects = await Project.findAndCountAll({
+				where: {
+					userId, statusId
+				}, 
+				limit, 
+				offset, 
+				include: [
+					{ 
+						model: ProjectExecutor,
+					}
+				]
+			}
+		);
         }
         return res.json(projects);
     }
