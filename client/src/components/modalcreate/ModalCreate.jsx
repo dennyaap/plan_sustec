@@ -33,8 +33,12 @@ const ModalCreate = ({ isOpen, closeModal, addProject }) => {
 		try{
 			const data = await findUser(hashtag.replace(/^./, ''));
 			if(data.userId !== user.currentUser.id) {
-				setExecutors( [...executors, { userId: data.userId, userName: data.fullName, roleId: 2 }] );
-				setErrorMessage('');
+				if(!executors.find(executor => executor.userId === data.userId)) {
+					setExecutors( [...executors, { userId: data.userId, fullName: data.fullName, roleId: 2 }] );
+					setErrorMessage('');
+				} else {
+					setErrorMessage('Такой сотрудник уже есть')
+				}
 			} else {
 				setErrorMessage('Вы уже принимаете участие в проекте')
 			}
@@ -43,9 +47,12 @@ const ModalCreate = ({ isOpen, closeModal, addProject }) => {
 			setErrorMessage(e.response.data.message);
 		}
 	}
+	const deleteExecutor = (executorId) => {
+		setExecutors([ executors.find( (executor) => executor.userId !== executorId) ]);
+	}
 
 	useEffect( () => {
-		setExecutors( [...executors, { userId: user.currentUser.id, userName: user.currentUser.fullName, roleId: 1 }] );
+		setExecutors( [...executors, { userId: user.currentUser.id, fullName: user.currentUser.fullName, roleId: 1 }] );
 	}, [])
 
 	return (
@@ -82,7 +89,7 @@ const ModalCreate = ({ isOpen, closeModal, addProject }) => {
 				</Box>
 				<Alert severity="error" sx={{display: errorMessage ? '' : 'none'}}>{errorMessage}</Alert>
 			</Box>
-			<ExecutorList executors={executors} />
+			<ExecutorList executors={executors} deleteExecutor={deleteExecutor}/>
 		</DialogContent>
 		<DialogActions>
 			<Button onClick={closeModal}>Закрыть</Button>

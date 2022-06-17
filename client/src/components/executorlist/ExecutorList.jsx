@@ -4,11 +4,11 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Typog
 import Paper from '@mui/material/Paper';
 import RoleSelect from '../roleselect/RoleSelect';
 import IconButton from '@mui/material/IconButton';
-import IconDelete from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import Context from '../../index';
 
 
-const ExecutorList = ({ executors }) => {
+const ExecutorList = ({ executors, deleteExecutor }) => {
 	const { user } = useContext(Context);
 	
 	return (
@@ -26,11 +26,11 @@ const ExecutorList = ({ executors }) => {
 							<TableRow
 								key={executor.userId}
 							>
-								<TableCell sx={{ color: executor.userId === user.currentUser.id ? '#32E182' : '#109CF1'}}>{executor.userName}</TableCell>
+								<TableCell sx={{ color: executor.userId === user.currentUser.id ? '#32E182' : '#109CF1'}}>{executor.fullName}</TableCell>
 								<TableCell><RoleSelect isDisabled={executor.userId === user.currentUser.id} roleId={executor.roleId}/></TableCell>
 								<TableCell>
-									<IconButton sx={{ color: '#FE5B5B', display: executor.userId === user.currentUser.id ? 'none' : '' }} >
-										<IconDelete/>
+									<IconButton sx={{ color: '#FE5B5B', display: executor.userId === user.currentUser.id ? 'none' : '' }} onClick={() => deleteExecutor(executor.userId)}>
+										<CancelIcon/>
 									</IconButton>
 								</TableCell>
 							</TableRow>
