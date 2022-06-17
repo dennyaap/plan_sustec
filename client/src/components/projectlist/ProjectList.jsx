@@ -11,7 +11,7 @@ import SpinnerLoader from '../../components/UI/spinnerloader/SpinnerLoader';
 import Context from '../../index';
 import Project from '../project/Project';
 
-const ProjectList = observer( ({ setSelectedProject, openModal, isLoading }) => {
+const ProjectList = observer( ({ setSelectedProject, openModal, openModalEdit, isLoading }) => {
 	const { project } = useContext(Context);
 
 	if( isLoading ) {
@@ -28,6 +28,7 @@ const ProjectList = observer( ({ setSelectedProject, openModal, isLoading }) => 
 				<TableCell align="center" sx={{color: '#8594A8'}}>Дата создания</TableCell>
 				<TableCell align="center" sx={{color: '#8594A8'}}>Статус</TableCell>
 				<TableCell align="center" sx={{color: '#8594A8'}}></TableCell>
+				<TableCell align="center" sx={{color: '#8594A8'}}></TableCell>
 			</TableRow>
 			</TableHead>
 			<TableBody>
@@ -37,6 +38,7 @@ const ProjectList = observer( ({ setSelectedProject, openModal, isLoading }) => 
 					project={ project } 
 					index={ index } 
 					openModal={ openModal }
+					openModalEdit={ openModalEdit }
 					setSelectedProject={ setSelectedProject }
 				/>)}
 			</TableBody>

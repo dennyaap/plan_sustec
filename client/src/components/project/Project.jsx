@@ -6,9 +6,10 @@ import { PROJECT_STATUSES } from '../../consts/consts';
 import { changeStatus } from '../../http/projectAPI';
 import IconButton from '@mui/material/IconButton';
 import IconDelete from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
-const Project = ({ project, index, openModal, setSelectedProject }) => {
+const Project = ({ project, index, openModal, openModalEdit, setSelectedProject }) => {
 	const [ backgroundColorStatus, setBackgroundColor ] = useState('');
 	const [ projectStatus, setProjectStatus ] = useState(project.statusId);
 
@@ -31,6 +32,11 @@ const Project = ({ project, index, openModal, setSelectedProject }) => {
 	const selectProject = (selectedProject) => {
 		setSelectedProject(selectedProject);
 		openModal();
+	}
+	
+	const selectEditProject = (selectedProject) => {
+		setSelectedProject(selectedProject);
+		openModalEdit();
 	}
 	
 
@@ -56,6 +62,11 @@ const Project = ({ project, index, openModal, setSelectedProject }) => {
 						statusId={ project.statusId } 
 						changeProjectStatus={ changeProjectStatus }
 					/>
+				</TableCell>
+				<TableCell>
+					<IconButton onClick={ () => selectEditProject( project ) }>
+						<EditIcon />
+					</IconButton>
 				</TableCell>
 				<TableCell>
 					<IconButton sx={{ color: '#FE5B5B' }} onClick={ () => selectProject( project ) }>

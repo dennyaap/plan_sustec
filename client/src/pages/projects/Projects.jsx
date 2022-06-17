@@ -6,6 +6,7 @@ import Context from '../../index';
 import ModalDelete from '../../components/modaldelete/ModalDelete';
 import { destroyProject } from '../../http/projectAPI';
 import ListHeader from '../../components/listheader/ListHeader';
+import ModalEdit from '../../components/modeledit/ModalEdit';
 
 const Projects = observer (() => {
 	const { project, user } = useContext( Context );
@@ -13,6 +14,8 @@ const Projects = observer (() => {
 
 	const [ selectedProject, setSelectedProject ] = useState({});
 	const [ isOpen, setIsOpen ] = useState(false);
+	const [ isOpenModalEdit, setIsOpenModalEdit ] = useState(false);
+
 	const openModal = () => {
 		setIsOpen(true);
 	  };
@@ -20,6 +23,13 @@ const Projects = observer (() => {
 	const closeModal = () => {
 		setIsOpen(false);
 	};
+
+	const openModalEdit = () => {
+		setIsOpenModalEdit(true);
+	}
+	const closeModalEdit= () => {
+		setIsOpenModalEdit(false);
+	}
 
 	const deleteProject = (currentProject) => {
 		setSelectedProject( currentProject );
@@ -43,6 +53,10 @@ const Projects = observer (() => {
 		).finally( () => setIsLoading(false))
 	}
 
+	const editProject = () => {
+		
+	}
+
 	useEffect( () => {
 		fetchProjects( user.currentUser.id )
 			.then( data =>  {
@@ -62,7 +76,8 @@ const Projects = observer (() => {
 		<div>
 			<ListHeader addProject={ addProject }/>
 			<ModalDelete isOpen={ isOpen } closeModal={ closeModal } deleteProject={ deleteProject } selectedProject={ selectedProject } />
-			<ProjectList isLoading={ isLoading } deleteProject={ deleteProject } setSelectedProject={ setSelectedProject } openModal={ openModal } closeModal={ closeModal } isOpen={ isOpen } />
+			<ModalEdit isOpenModalEdit={isOpenModalEdit} closeModalEdit={closeModalEdit} setSelectedProject={ setSelectedProject } selectedProject={ selectedProject } />
+			<ProjectList isLoading={ isLoading } deleteProject={ deleteProject } setSelectedProject={ setSelectedProject } openModal={ openModal } closeModal={ closeModal } isOpen={ isOpen } openModalEdit={openModalEdit} closeModalEdit={closeModalEdit} />
 		</div>
   	);
 });
