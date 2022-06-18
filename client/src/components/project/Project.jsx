@@ -50,7 +50,7 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject 
 				<TableCell align="center">
 					{ index + 1 }
 				</TableCell>
-				<TableCell align="left" sx={{color: '#323C47', fontWeight: 500}}>
+				<TableCell align="center" sx={{color: '#323C47', fontWeight: 500}}>
 					{ project.name }
 				</TableCell>
 				<TableCell align="center" sx={{color: '#707683', fontWeight: 500}}>
@@ -63,12 +63,12 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject 
 						changeProjectStatus={ changeProjectStatus }
 					/>
 				</TableCell>
-				<TableCell>
+				<TableCell align='center'>
 					<IconButton onClick={ () => selectEditProject( project ) }>
 						<EditIcon />
 					</IconButton>
 				</TableCell>
-				<TableCell>
+				<TableCell align='center'>
 					<IconButton sx={{ color: '#FE5B5B' }} onClick={ () => selectProject( project ) }>
 						<IconDelete/>
 					</IconButton>
