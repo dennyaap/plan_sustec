@@ -50,10 +50,10 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject 
 				<TableCell align="center">
 					{ index + 1 }
 				</TableCell>
-				<TableCell align="left" sx={{color: COLORS.DARK_BLUE, fontWeight: 500}}>
+				<TableCell align="center" sx={{color: COLORS.DARK_BLUE, fontWeight: 500, fontSize:'15px'}}>
 					{ project.name }
 				</TableCell>
-				<TableCell align="center" sx={{color: COLORS.DARK_GREY, fontWeight: 500}}>
+				<TableCell align="center" sx={{color: COLORS.DARK_GREY, fontWeight: 500, fontSize:'13px'}}>
 					 { parseDate(project.createdAt)} 
 				</TableCell>
 				<TableCell sx={{display: 'flex', justifyContent: 'center'}}>
@@ -64,13 +64,13 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject 
 					/>
 				</TableCell>
 				<TableCell align='center'>
-					<IconButton onClick={ () => selectEditProject( project ) }>
-						<EditIcon />
+					<IconButton onClick={ () => selectEditProject( project ) } >
+						<EditIcon sx={{width:'20px',height:'20px'}}/>
 					</IconButton>
 				</TableCell>
 				<TableCell align='center'>
 					<IconButton sx={{ color: COLORS.RED }} onClick={ () => selectProject( project ) }>
-						<IconDelete/>
+						<IconDelete sx={{width:'20px',height:'20px'}}/>
 					</IconButton>
 				</TableCell>
 		</TableRow>

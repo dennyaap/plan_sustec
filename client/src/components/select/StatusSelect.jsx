@@ -30,6 +30,7 @@ export default function StatusSelect({ projectId, statusId, changeProjectStatus 
                         borderRadius: 60,
                         width: 160,
                         height: 40,
+                        fontSize:'14px',
                         color: COLORS.WHITE,
                         '&:before': {
                             display:'none'

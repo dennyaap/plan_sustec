@@ -26,7 +26,7 @@ const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, is
 					<TableRow>
 						{
 							PROJECT_TITLES.map(({ nameCell }) => (
-								<TableCell key={nameCell} align={'center'} sx={{ color: COLORS.LIGHT_BLUE, letterSpacing: 1 }}>{ nameCell }</TableCell>
+								<TableCell key={nameCell} align={'center'} sx={{ color: COLORS.LIGHT_BLUE, letterSpacing: 1, fontSize:'13px' }}>{ nameCell }</TableCell>
 							))
 						}
 					</TableRow>
