@@ -120,6 +120,56 @@ class ProjectController {
 		});
 		return res.json( project );
 	}
+	async update(req, res){
+		const { projectId, projectName, executors, deletedExecutors, executorRoles } = req.body;
+		let project = {};
+		if(projectName){
+			project = await Project.update(
+				{
+					name: projectName
+				},
+				{
+					where: {
+						id: projectId
+					}
+				});
+		} 
+		if (executors) {
+			executors.forEach( (executor) => {
+				ProjectExecutor.create({
+					userId: executor.userId,
+					projectId,
+					roleId: executor.roleId
+				})
+			})
+		}
+		if(deletedExecutors) {
+			deletedExecutors.forEach( (userId) => {
+				ProjectExecutor.destroy({
+					where: {
+						userId,
+						projectId
+					}
+				})
+			})
+		}
+		if(executorRoles) {
+			executorRoles.forEach( (executor) => {
+				ProjectExecutor.update(
+					{
+						roleId: executor.roleId
+					},
+					{
+						where: {
+							projectId,
+							userId: executor.userId
+						}
+					}
+				)
+			})
+		}
+		return res.json( project );
+	}
 }
 
 module.exports = new ProjectController();

@@ -9,7 +9,7 @@ import Context from '../../index';
 import { COLORS } from '../../consts/consts';
 
 
-const ExecutorList = ({ executors, deleteExecutor }) => {
+const ExecutorList = ({ executors, deleteExecutor, editExecutorRole }) => {
 	const { user } = useContext(Context);
 	
 	return (
@@ -27,8 +27,8 @@ const ExecutorList = ({ executors, deleteExecutor }) => {
 							<TableRow
 								key={executor.userId}
 							>
-								<TableCell sx={{ color: executor.userId === user.currentUser.id ? COLORS.GREEN : COLORS.BLUE}}>{executor.fullName}</TableCell>
-								<TableCell><RoleSelect isDisabled={executor.userId === user.currentUser.id} roleId={executor.roleId}/></TableCell>
+								<TableCell sx={{ color: executor.userId === user.currentUser.id ? COLORS.GREEN : COLORS.BLUE}}>{executor.fullName || executor.user.fullName}</TableCell>
+								<TableCell><RoleSelect isDisabled={executor.userId === user.currentUser.id} roleId={executor.roleId} editExecutorRole={editExecutorRole} executorId={executor.userId}/></TableCell>
 								<TableCell>
 									<IconButton sx={{ color: COLORS.RED, display: executor.userId === user.currentUser.id ? 'none' : '' }} onClick={() => deleteExecutor(executor.userId)}>
 										<CancelIcon/>

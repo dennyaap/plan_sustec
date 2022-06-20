@@ -4,7 +4,7 @@ import { createProject, fetchProjects, fetchRoles, fetchStatuses } from '../../h
 import { observer } from 'mobx-react-lite';
 import Context from '../../index';
 import ModalDelete from '../../components/modaldelete/ModalDelete';
-import { destroyProject } from '../../http/projectAPI';
+import { destroyProject, updateProject } from '../../http/projectAPI';
 import ListHeader from '../../components/listheader/ListHeader';
 import ModalEdit from '../../components/modeledit/ModalEdit';
 
@@ -44,19 +44,21 @@ const Projects = observer (() => {
 	}
 	const addProject = ({name, executors}) => {
 		setIsLoading(true);
-		console.log(name);
-		console.log(executors)
 		createProject({ name, userId: user.currentUser.id, statusId: 1, projectExecutors: JSON.stringify(executors) })
 			.then( () => fetchProjects( user.currentUser.id ).then( data => {
 				project.setProjects( data.rows )
 			})
 		).finally( () => setIsLoading(false))
 	}
-
-	const editProject = () => {
-		
+	const editProject = (currentProject) => {
+		setIsLoading(true);
+		updateProject(currentProject)
+			.then( () => fetchProjects( user.currentUser.id ).then( data => {
+				project.setProjects( data.rows )
+			})
+		).finally( () => setIsLoading(false))
 	}
-
+	
 	useEffect( () => {
 		fetchProjects( user.currentUser.id )
 			.then( data =>  {
@@ -76,7 +78,7 @@ const Projects = observer (() => {
 		<div>
 			<ListHeader addProject={ addProject }/>
 			<ModalDelete isOpen={ isOpen } closeModal={ closeModal } deleteProject={ deleteProject } selectedProject={ selectedProject } />
-			<ModalEdit isOpenModalEdit={isOpenModalEdit} closeModalEdit={closeModalEdit} setSelectedProject={ setSelectedProject } selectedProject={ selectedProject } />
+			<ModalEdit isOpenModalEdit={isOpenModalEdit} closeModalEdit={closeModalEdit} setSelectedProject={ setSelectedProject } selectedProject={selectedProject} editProject={editProject}/>
 			<ProjectList isLoading={ isLoading } deleteProject={ deleteProject } setSelectedProject={ setSelectedProject } openModal={ openModal } closeModal={ closeModal } isOpen={ isOpen } openModalEdit={openModalEdit} closeModalEdit={closeModalEdit} />
 		</div>
   	);

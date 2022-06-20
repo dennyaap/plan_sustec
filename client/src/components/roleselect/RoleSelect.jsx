@@ -6,22 +6,26 @@ import { Box } from '@mui/material';
 import Context from '../../index';
 
 
-const RoleSelect = ({isDisabled, roleId}) => {
+const RoleSelect = ({isDisabled, roleId, editExecutorRole, executorId}) => {
 	const { project } = useContext( Context );
-	const [ currentRole, setRole ] = useState(roleId);
+	const [ currentRole, setCurrentRole ] = useState(roleId);
 
 	const changeStatus = (e) => {
 		// let statusId = e.target.value;
 		// setStatus(statusId);
 		// changeProjectStatus({ projectId , statusId })
 	}
+    const changeExecutorRole = (roleId) => {
+        setCurrentRole(roleId)
+        editExecutorRole({executorId, roleId});
+    }
 
     return (
         <Box sx={{ width: 140, }}>
             <FormControl fullWidth>
             <Select
                     value={currentRole}
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={(e) => changeExecutorRole(e.target.value)}
                     variant='standard'
                     align='center'
                     sx={{

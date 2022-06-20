@@ -15,26 +15,43 @@ import ExecutorList from '../executorlist/ExecutorList';
 import { findUser } from '../../http/userAPI';
 import Context from '../../index';
 import { COLORS } from '../../consts/consts';
+import { updateProject } from '../../http/projectAPI';
 
 
 
-const ModalEdit = ({isOpenModalEdit, closeModalEdit, setSelectedProject, selectedProject}) => {
+const ModalEdit = ({isOpenModalEdit, closeModalEdit, setSelectedProject, selectedProject, editProject}) => {
 	const [ hashtag, setHashtag ] = useState('#');
 	const { user } = useContext(Context);
 	const [ errorMessage, setErrorMessage ] = useState('');
+	const [ deletedExecutors, setDeletedExecutors ] = useState([]);
+	const [ executors, setExecutors ] = useState([]);
+	const [ executorRoles, setExecutorRoles ] = useState([]);
 
-	const editProject = (name) => {
-		// closeModal();
-		// addProject({name, executors});
+	const editCurrentProject = () => {
+		if(selectedProject.name.length === 0){
+			setErrorMessage('Введите название проекта')
+		} else {
+			editProject({projectId: selectedProject.id, projectName: selectedProject.name, executors, deletedExecutors, executorRoles});
+			closeModalEdit(false);
+		}
 	}
-	const [ executors, setExecutors ] = useState([])
+
+	const addDeletedExecutors = (executorId) => {
+		setDeletedExecutors([...deletedExecutors, executorId]);
+		setSelectedProject({...selectedProject, project_executors: [selectedProject.project_executors.find( (executor) => executor.id !== executorId)]})
+	}
 
 	const addExecutor = async () => {
 		try{
 			const data = await findUser(hashtag.replace(/^./, ''));
 			if(data.userId !== user.currentUser.id) {
-				setExecutors( [...executors, { userId: data.userId, userName: data.fullName, roleId: 2 }] );
-				setErrorMessage('');
+				if(!selectedProject.project_executors.find(executor => executor.userId === data.userId)){
+					setSelectedProject({...selectedProject, project_executors: [...selectedProject.project_executors, { userId: data.userId, fullName: data.fullName, roleId: 2 }] });
+					setExecutors([...executors, { userId: data.userId, fullName: data.fullName, roleId: 2 }]);
+					setErrorMessage('');
+				} else {
+					setErrorMessage('Такой сотрудник уже состоит в проекте')
+				}
 			} else {
 				setErrorMessage('Вы уже принимаете участие в проекте')
 			}
@@ -43,9 +60,9 @@ const ModalEdit = ({isOpenModalEdit, closeModalEdit, setSelectedProject, selecte
 			setErrorMessage(e.response.data.message);
 		}
 	}
-	
-	
-	
+	const editExectutorRole = ({executorId, roleId}) => {
+		setExecutorRoles([...executorRoles, { userId: executorId, roleId }]);
+	}
 	return (
 		<Dialog open={ isOpenModalEdit } onClose={closeModalEdit} fullWidth={true}>
 		<DialogTitle>Редактирование проекта</DialogTitle>
@@ -58,7 +75,7 @@ const ModalEdit = ({isOpenModalEdit, closeModalEdit, setSelectedProject, selecte
 				type="text"
 				fullWidth
 				variant="standard"
-				onChange={(e) => setSelectedProject({...selectedProject, name: e.target.value})}
+				onInput={(e) => setSelectedProject({...selectedProject, name: e.target.value})}
 				value={selectedProject.name}
 			/>
 			
@@ -78,13 +95,14 @@ const ModalEdit = ({isOpenModalEdit, closeModalEdit, setSelectedProject, selecte
 					/>
 					<Button variant="outlined" onClick={addExecutor} sx={{textTransform: 'none', letterSpacing: 1}}>Добавить</Button>
 				</Box>
-				<Alert severity="error" sx={{display: errorMessage ? '' : 'none'}}>{errorMessage}</Alert>
+			
 			</Box>
-			<ExecutorList executors={selectedProject.project_executors} />
+			<Alert severity="error" sx={{display: errorMessage ? '' : 'none', marginBottom: 2}}>{errorMessage}</Alert>
+			<ExecutorList executors={selectedProject.project_executors} deleteExecutor={addDeletedExecutors} editExecutorRole={editExectutorRole}/>
 		</DialogContent>
 		<DialogActions>
 			<Button onClick={closeModalEdit} sx={{textTransform: 'none', letterSpacing: 1}}>Закрыть</Button>
-			<Button onClick={() => editProject()} variant="contained" sx={{ background: COLORS.BLUE, textTransform: 'none', letterSpacing: 1}}>Редактировать</Button>
+			<Button onClick={() => editCurrentProject()} variant="contained" sx={{ background: COLORS.BLUE, textTransform: 'none', letterSpacing: 1}}>Редактировать</Button>
 		</DialogActions>
 	</Dialog>
 	);
