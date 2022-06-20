@@ -29,7 +29,9 @@ const ListHeader = ({ addProject }) => {
 				textTransform: 'none',
 				letterSpacing: 1,
 				width: '170px',
-				height: '46px'
+				height: '46px',
+				boxShadow: '0 4px 10px rgba(16,156,241,0.26)',
+				borderRadius: '6px'
 			}}
 		>
 			Создать проект
