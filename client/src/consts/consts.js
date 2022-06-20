@@ -19,3 +19,36 @@ export const PROJECT_STATUSES = [
 	   color: 'rgba(254, 80, 80, 0.29)'
    } 
 ];
+
+export const COLORS = {
+	WHITE: '#fff',
+	LIGHT_GREY: '#C2CFE0',
+	BLUE: '#109CF1',
+	GREEN: '#32E182',
+	RED: '#FE5B5B',
+	ORANGE: '#FFBF43',
+	LIGHT_BLUE: '#8594A8',
+	DARK_BLUE: '#334D6E',
+	DARK_GREY: '#707683'
+}
+
+export const PROJECT_TITLES = [
+	{
+		nameCell: '№'
+	},
+	{
+		nameCell: 'Название'
+	},
+	{
+		nameCell: 'Дата создания'
+	},
+	{
+		nameCell: 'Статус'
+	},
+	{
+		nameCell: 'Редактировать'
+	},
+	{
+		nameCell: 'Удалить'
+	},
+]

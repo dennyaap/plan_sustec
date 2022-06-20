@@ -6,6 +6,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
+import { COLORS } from '../../consts/consts';
 
 
 const drawerWidth = 240;
@@ -19,7 +20,7 @@ const AppBar = styled(MuiAppBar, {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-	backgroundColor: '#fff',
+	backgroundColor: COLORS.WHITE,
 	boxShadow: 'none',
     ...(open && {
       marginLeft: drawerWidth,
@@ -49,10 +50,10 @@ const Appbar = ({ open, handleDrawerOpen }) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography noWrap component="div" sx={{color: '#109CF1', fontSize: 18, fontWeight: 600}}>
+                <Typography noWrap component="div" sx={{color: COLORS.BLUE, fontSize: 18, fontWeight: 600, letterSpacing: 1}}>
                 Plan Sustec
                 </Typography>
-                <IconButton sx={{color:'#109CF1',position:'absolute',right:10}}><NotificationsIcon/></IconButton>
+                <IconButton sx={{color: COLORS.BLUE, position:'absolute', right:10}}><NotificationsIcon/></IconButton>
                 </Toolbar>
             </AppBar>
     );

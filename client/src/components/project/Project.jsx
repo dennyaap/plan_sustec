@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import StatusSelect from '../select/StatusSelect';
-import { PROJECT_STATUSES } from '../../consts/consts';
+import { COLORS, PROJECT_STATUSES } from '../../consts/consts';
 import { changeStatus } from '../../http/projectAPI';
 import IconButton from '@mui/material/IconButton';
 import IconDelete from '@mui/icons-material/Delete';
@@ -50,10 +50,10 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject 
 				<TableCell align="center">
 					{ index + 1 }
 				</TableCell>
-				<TableCell align="center" sx={{color: '#323C47', fontWeight: 500}}>
+				<TableCell align="left" sx={{color: COLORS.DARK_BLUE, fontWeight: 500}}>
 					{ project.name }
 				</TableCell>
-				<TableCell align="center" sx={{color: '#707683', fontWeight: 500}}>
+				<TableCell align="center" sx={{color: COLORS.DARK_GREY, fontWeight: 500}}>
 					 { parseDate(project.createdAt)} 
 				</TableCell>
 				<TableCell sx={{display: 'flex', justifyContent: 'center'}}>
@@ -69,7 +69,7 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject 
 					</IconButton>
 				</TableCell>
 				<TableCell align='center'>
-					<IconButton sx={{ color: '#FE5B5B' }} onClick={ () => selectProject( project ) }>
+					<IconButton sx={{ color: COLORS.RED }} onClick={ () => selectProject( project ) }>
 						<IconDelete/>
 					</IconButton>
 				</TableCell>

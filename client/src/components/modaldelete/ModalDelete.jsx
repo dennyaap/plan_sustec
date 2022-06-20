@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { Typography } from '@mui/material';
+import { COLORS } from '../../consts/consts';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -22,7 +23,7 @@ const ModalDelete = ({ isOpen, selectedProject, closeModal, deleteProject }) => 
 				onClose={closeModal}
 				aria-describedby="alert-dialog-slide-description"
 			>
-				<DialogTitle>Вы действительно хотите удалить <Typography sx={{ color: '#FE5B5B' }}>"{selectedProject.name}"</Typography></DialogTitle>
+				<DialogTitle>Вы действительно хотите удалить <Typography sx={{ color: COLORS.RED }}>"{selectedProject.name}"</Typography></DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-slide-description">
 						Удалив проект, вы также удалите все задачи данного проекта.
@@ -30,7 +31,7 @@ const ModalDelete = ({ isOpen, selectedProject, closeModal, deleteProject }) => 
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={ closeModal }>Отмена</Button>
-					<Button onClick={ deleteProject } sx={{ color: '#FE5B5B' }}>Удалить</Button>
+					<Button onClick={ deleteProject } sx={{ color: COLORS.RED }}>Удалить</Button>
 				</DialogActions>
 		</Dialog>
 	);

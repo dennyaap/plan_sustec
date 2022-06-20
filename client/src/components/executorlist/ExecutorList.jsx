@@ -6,6 +6,7 @@ import RoleSelect from '../roleselect/RoleSelect';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Context from '../../index';
+import { COLORS } from '../../consts/consts';
 
 
 const ExecutorList = ({ executors, deleteExecutor }) => {
@@ -26,10 +27,10 @@ const ExecutorList = ({ executors, deleteExecutor }) => {
 							<TableRow
 								key={executor.userId}
 							>
-								<TableCell sx={{ color: executor.userId === user.currentUser.id ? '#32E182' : '#109CF1'}}>{executor.fullName}</TableCell>
+								<TableCell sx={{ color: executor.userId === user.currentUser.id ? COLORS.GREEN : COLORS.BLUE}}>{executor.fullName}</TableCell>
 								<TableCell><RoleSelect isDisabled={executor.userId === user.currentUser.id} roleId={executor.roleId}/></TableCell>
 								<TableCell>
-									<IconButton sx={{ color: '#FE5B5B', display: executor.userId === user.currentUser.id ? 'none' : '' }} onClick={() => deleteExecutor(executor.userId)}>
+									<IconButton sx={{ color: COLORS.RED, display: executor.userId === user.currentUser.id ? 'none' : '' }} onClick={() => deleteExecutor(executor.userId)}>
 										<CancelIcon/>
 									</IconButton>
 								</TableCell>

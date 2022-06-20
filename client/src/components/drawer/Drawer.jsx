@@ -18,7 +18,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 
 import { NavLink } from 'react-router-dom';
-import { PROJECTS_ROUTE, TASKS_ROUTE } from '../../consts/consts';
+import { COLORS, PROJECTS_ROUTE, TASKS_ROUTE } from '../../consts/consts';
 import { useLocation } from 'react-router-dom';
 import DrawerAvatar from '../draweravatar/DrawerAvatar';
 
@@ -110,7 +110,7 @@ const Drawer = ({ open, handleDrawerClose }) => {
                                 minHeight: 48,
                                 justifyContent: open ? 'initial' : 'center',
                                 px: 2.5,
-                                color: location.pathname === route ? '#109CF1' : '#334D6E'
+                                color: location.pathname === route ? COLORS.BLUE : COLORS.DARK_BLUE
                             }}
                         >
                             <ListItemIcon
@@ -118,7 +118,7 @@ const Drawer = ({ open, handleDrawerClose }) => {
                                     minWidth: 0,
                                     mr: open ? 3 : 'auto',
                                     justifyContent: 'center',
-                                    color: location.pathname === route ? '#109CF1' : '#C2CFE0'
+                                    color: location.pathname === route ? COLORS.BLUE : COLORS.LIGHT_GREY
                                 }}
                             >
                                 {icon}
@@ -153,7 +153,7 @@ const Drawer = ({ open, handleDrawerClose }) => {
                         >
                             <SettingsIcon />
                         </ListItemIcon>
-                        <ListItemText primary={'Настройки'} sx={{ opacity: open ? 1 : 0 }} />
+                        <ListItemText primary={'Настройки'} sx={{ opacity: open ? 1 : 0, color: COLORS.DARK_GREY }} />
                     </ListItemButton>
                 </ListItem>
             </List>
@@ -173,12 +173,12 @@ const Drawer = ({ open, handleDrawerClose }) => {
                                 minWidth: 0,
                                 mr: open ? 3 : 'auto',
                                 justifyContent: 'center',
-                                color: '#FE5050'
+                                color: COLORS.RED
                             }}
                         >
                             <LogoutIcon />
                         </ListItemIcon>
-                        <ListItemText primary={'Выйти'} sx={{ opacity: open ? 1 : 0, color: '#FE5050' }} />
+                        <ListItemText primary={'Выйти'} sx={{ opacity: open ? 1 : 0, color: COLORS.RED }} />
                     </ListItemButton>
                 </ListItem>
                 <DrawerHeader />

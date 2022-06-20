@@ -14,6 +14,7 @@ import RoleSelect from '../roleselect/RoleSelect';
 import ExecutorList from '../executorlist/ExecutorList';
 import { findUser } from '../../http/userAPI';
 import Context from '../../index';
+import { COLORS } from '../../consts/consts';
 
 
 
@@ -75,15 +76,15 @@ const ModalEdit = ({isOpenModalEdit, closeModalEdit, setSelectedProject, selecte
 						onChange={(e) => setHashtag(e.target.value)}
 						value={hashtag}
 					/>
-					<Button variant="outlined" onClick={addExecutor}>Добавить</Button>
+					<Button variant="outlined" onClick={addExecutor} sx={{textTransform: 'none', letterSpacing: 1}}>Добавить</Button>
 				</Box>
 				<Alert severity="error" sx={{display: errorMessage ? '' : 'none'}}>{errorMessage}</Alert>
 			</Box>
 			<ExecutorList executors={selectedProject.project_executors} />
 		</DialogContent>
 		<DialogActions>
-			<Button onClick={closeModalEdit}>Закрыть</Button>
-			<Button onClick={() => editProject()} variant="contained" sx={{ background: '#109CF1'}}>Редактировать</Button>
+			<Button onClick={closeModalEdit} sx={{textTransform: 'none', letterSpacing: 1}}>Закрыть</Button>
+			<Button onClick={() => editProject()} variant="contained" sx={{ background: COLORS.BLUE, textTransform: 'none', letterSpacing: 1}}>Редактировать</Button>
 		</DialogActions>
 	</Dialog>
 	);

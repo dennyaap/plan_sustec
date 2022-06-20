@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import SpinnerLoader from '../../components/UI/spinnerloader/SpinnerLoader';
 import Context from '../../index';
 import Project from '../project/Project';
+import { COLORS, PROJECT_TITLES } from '../../consts/consts';
 
 const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, isLoading }) => {
 	const { project } = useContext(Context);
@@ -24,47 +25,10 @@ const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, is
 				<TableHead>
 					<TableRow>
 						{
-							[
-								{
-									alignCell: 'center',
-									colorCell: '#8594A8',
-									nameCell: '№'
-								},
-								{
-									alignCell: 'center',
-									colorCell: '#8594A8',
-									nameCell: 'Название'
-								},
-								{
-									alignCell: 'center',
-									colorCell: '#8594A8',
-									nameCell: 'Дата создания'
-								},
-								{
-									alignCell: 'center',
-									colorCell: '#8594A8',
-									nameCell: 'Статус'
-								},
-								{
-									alignCell: 'center',
-									colorCell: '#8594A8',
-									nameCell: 'Редактировать'
-								},
-								{
-									alignCell: 'center',
-									colorCell: '#8594A8',
-									nameCell: 'Удалить'
-								},
-							].map(({ nameCell, alignCell, colorCell }) => (
-								<TableCell align={alignCell} sx={{ color: colorCell }}>{nameCell}</TableCell>
+							PROJECT_TITLES.map(({ nameCell }) => (
+								<TableCell key={nameCell} align={'center'} sx={{ color: COLORS.LIGHT_BLUE, letterSpacing: 1 }}>{ nameCell }</TableCell>
 							))
 						}
-						{/* <TableCell align="center" sx={{ color: '#8594A8' }}>№</TableCell>
-						<TableCell align="left" sx={{ color: '#8594A8' }}>Название</TableCell>
-						<TableCell align="center" sx={{ color: '#8594A8' }}>Дата создания</TableCell>
-						<TableCell align="center" sx={{ color: '#8594A8' }}>Статус</TableCell>
-						<TableCell align="center" sx={{ color: '#8594A8' }}></TableCell>
-						<TableCell align="center" sx={{ color: '#8594A8' }}></TableCell> */}
 					</TableRow>
 				</TableHead>
 				<TableBody>

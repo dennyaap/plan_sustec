@@ -12,6 +12,7 @@ import { observer } from 'mobx-react-lite';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import Context from '../../index';
+import { COLORS } from '../../consts/consts';
 const DrawerAvatar = observer ( ({ open }) => {
 	const { user } = useContext(Context);
 
@@ -41,7 +42,7 @@ const DrawerAvatar = observer ( ({ open }) => {
 								<Avatar
 								sx={
 									{
-										width: '46px', height: '46px', bgcolor: '#109CF1'
+										width: '46px', height: '46px', bgcolor: COLORS.BLUE
 									}
 								}
                     src='' 
@@ -52,16 +53,16 @@ const DrawerAvatar = observer ( ({ open }) => {
 							</ListItemIcon>
 							<ListItemText
                                 primary={ <Box sx={{ opacity: open ? 1 : 0 }}>
-								<Typography>{user.currentUser.fullName}</Typography>
+								<Typography sx={{ color: COLORS.DARK_BLUE }}>{user.currentUser.fullName}</Typography>
 								<Typography 
-									sx={{ fontSize: '8pt', color: 'gray' }}
+									sx={{ fontSize: '13px', color: COLORS.LIGHT_BLUE }}
 									>
 									#{user.currentUser.hashtag}
 									<ContentCopyIcon 
 										onClick={() => navigator.clipboard.writeText(user.currentUser.hashtag)} 
 										sx={{ 
 											width: '15px',
-											color: '#109CF1',
+											color: COLORS.BLUE,
 											marginLeft: '5px',
 											cursor: 'pointer'
 										}}

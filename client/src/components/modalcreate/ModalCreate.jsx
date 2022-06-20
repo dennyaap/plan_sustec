@@ -14,6 +14,7 @@ import RoleSelect from '../roleselect/RoleSelect';
 import ExecutorList from '../executorlist/ExecutorList';
 import { findUser } from '../../http/userAPI';
 import Context from '../../index';
+import { COLORS } from '../../consts/consts';
 
 
 
@@ -85,15 +86,15 @@ const ModalCreate = ({ isOpen, closeModal, addProject }) => {
 						onChange={(e) => setHashtag(e.target.value)}
 						value={hashtag}
 					/>
-					<Button variant="outlined" onClick={addExecutor}>Добавить</Button>
+					<Button variant="outlined" onClick={addExecutor} sx={{textTransform: 'none', letterSpacing: 1}}>Добавить</Button>
 				</Box>
 				<Alert severity="error" sx={{display: errorMessage ? '' : 'none'}}>{errorMessage}</Alert>
 			</Box>
 			<ExecutorList executors={executors} deleteExecutor={deleteExecutor}/>
 		</DialogContent>
 		<DialogActions>
-			<Button onClick={closeModal}>Закрыть</Button>
-			<Button onClick={() => createProject(name)} variant="contained" sx={{ background: '#109CF1'}}>Создать</Button>
+			<Button onClick={closeModal} sx={{textTransform: 'none', letterSpacing: 1}}>Закрыть</Button>
+			<Button onClick={() => createProject(name)} variant="contained" sx={{ background: COLORS.BLUE, textTransform: 'none', letterSpacing: 1}}>Создать</Button>
 		</DialogActions>
 	</Dialog>
 	);

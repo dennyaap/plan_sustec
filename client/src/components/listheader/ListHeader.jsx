@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box } from '@mui/system';
 import Button from '@mui/material/Button';
 import ModalCreate from '../modalcreate/ModalCreate';
+import { COLORS } from '../../consts/consts';
 
 
 const ListHeader = ({ addProject }) => {
@@ -19,12 +20,16 @@ const ListHeader = ({ addProject }) => {
 		<Button variant="contained" 
 			onClick={ openModal }
 			sx={{
-				backgroundColor: '#32E182',
+				backgroundColor: COLORS.GREEN,
 				'&:hover':{
-					backgroundColor: '#32E182',
+					backgroundColor: COLORS.GREEN,
+					opacity: 0.9
 				},
 				fontSize: 13, fontWeight: 600,
-				textTransform: 'none'
+				textTransform: 'none',
+				letterSpacing: 1,
+				width: '170px',
+				height: '46px'
 			}}
 		>
 			Создать проект

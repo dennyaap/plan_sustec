@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Box } from '@mui/material';
 import Context from '../../index';
+import { COLORS } from '../../consts/consts';
 
 
 export default function StatusSelect({ projectId, statusId, changeProjectStatus }) {
@@ -29,7 +30,7 @@ export default function StatusSelect({ projectId, statusId, changeProjectStatus 
                         borderRadius: 60,
                         width: 160,
                         height: 40,
-                        color: '#fff',
+                        color: COLORS.WHITE,
                         '&:before': {
                             display:'none'
                         },
