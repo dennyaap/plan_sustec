@@ -64,7 +64,8 @@ class ProjectController {
 							}
 						] 
 					}
-				]
+				],
+				order: [['updatedAt', 'DESC']]
 			}
 		);
 		
@@ -95,7 +96,8 @@ class ProjectController {
 					{ 
 						model: ProjectExecutor,
 					}
-				]
+				],
+				order: [['createdAt', 'DESC']]
 			}
 		);
         }

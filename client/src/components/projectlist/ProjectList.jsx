@@ -7,17 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import SpinnerLoader from '../../components/UI/spinnerloader/SpinnerLoader';
 import Context from '../../index';
 import Project from '../project/Project';
 import { COLORS, PROJECT_TITLES } from '../../consts/consts';
 
-const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, isLoading }) => {
+const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, offsetProjects }) => {
 	const { project } = useContext(Context);
-
-	if (isLoading) {
-		return <SpinnerLoader />
-	}
 
 	return (
 		<TableContainer component={Paper} sx={{boxShadow: '0 4px 10px rgba(0, 0, 0, 0.06)'}}>
@@ -36,7 +31,7 @@ const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, is
 						<Project
 							key={project.id}
 							project={project}
-							index={index}
+							index={offsetProjects++}
 							openModal={openModal}
 							openModalEdit={openModalEdit}
 							setSelectedProject={setSelectedProject}
