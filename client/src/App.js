@@ -6,13 +6,14 @@ import Context from './index';
 import { check } from './http/userAPI';
 import SpinnerLoader from './components/UI/spinnerloader/SpinnerLoader';
 
-import {  ThemeProvider} from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import GlobalStyles from "@mui/material/GlobalStyles";
 
 import GlobalStyleOverrides from './GlobalStyles';
 
 const App = observer(() => {
 	const { user } = useContext(Context);
-	const [loading, setLoading] = useState(true);
+	const [ loading, setLoading ] = useState(true);
 
 	useEffect(() => {
 		check().then(data => {
@@ -26,7 +27,8 @@ const App = observer(() => {
 	}
 
 	return (
-		<ThemeProvider theme={GlobalStyleOverrides()}>
+		<ThemeProvider theme={ GlobalStyleOverrides() }>
+			<GlobalStyles styles={{ body: {background: '#F3F4F6'}}}/>
 			<div className="App">
 				<BrowserRouter>
 					<AppRouter />
