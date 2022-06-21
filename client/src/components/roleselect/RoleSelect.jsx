@@ -38,7 +38,7 @@ const RoleSelect = ({isDisabled, roleId, editExecutorRole, executorId}) => {
                 >
                     {
                        project.roles.map(({ name, id}) => (
-                            <MenuItem key={ name } value={ id }>{ name }</MenuItem>
+                            <MenuItem key={ name } value={ id } disabled={name === 'Руководитель'}>{ name }</MenuItem>
                         ))
                     }
                 </Select>
