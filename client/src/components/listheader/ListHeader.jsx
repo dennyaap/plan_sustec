@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import Button from '@mui/material/Button';
 import ModalCreate from '../modalcreate/ModalCreate';
 import { COLORS } from '../../consts/consts';
+import SortStatus from '../sortStatus/SortStatus';
 
 
 const ListHeader = ({ addProject }) => {
@@ -16,7 +17,10 @@ const ListHeader = ({ addProject }) => {
     };
 
 	return (
-		<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '26px' }}>
+		<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '26px' }}>
+
+		<SortStatus/>
+
 		<Button variant="contained" 
 			onClick={ openModal }
 			sx={{
