@@ -51,7 +51,7 @@ const Appbar = ({ open, handleDrawerOpen }) => {
                     <MenuIcon />
                 </IconButton>
                 
-                <SearchInput/>
+                <SearchInput placeholder={'Название проекта...'}/>
               
                 <IconButton sx={{color: COLORS.BLUE, position:'absolute', right:10}}><NotificationsIcon/></IconButton>
                 </Toolbar>
