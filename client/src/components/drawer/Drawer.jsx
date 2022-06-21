@@ -15,6 +15,7 @@ import TaskIcon from '@mui/icons-material/Task';
 import PersonIcon from '@mui/icons-material/Person';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Typography from '@mui/material/Typography';
 
 
 import { NavLink } from 'react-router-dom';
@@ -80,7 +81,10 @@ const Drawer = ({ open, handleDrawerClose }) => {
 
     return (
         <DrawerStyle variant="permanent" open={open}>
-            <DrawerHeader>
+            <DrawerHeader sx={{display: 'flex', justifyContent: 'space-between', marginLeft: 2}}>
+                <Typography noWrap component="div" sx={{color: COLORS.BLUE, fontSize: 18, fontWeight: 600, letterSpacing: 1}}>
+                Plan Sustec
+                </Typography>
                 <IconButton onClick={handleDrawerClose}>
                     {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton>

@@ -1,6 +1,5 @@
 import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { styled, useTheme } from '@mui/material/styles';
@@ -50,9 +49,7 @@ const Appbar = ({ open, handleDrawerOpen }) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography noWrap component="div" sx={{color: COLORS.BLUE, fontSize: 18, fontWeight: 600, letterSpacing: 1}}>
-                Plan Sustec
-                </Typography>
+              
                 <IconButton sx={{color: COLORS.BLUE, position:'absolute', right:10}}><NotificationsIcon/></IconButton>
                 </Toolbar>
             </AppBar>
