@@ -20,7 +20,7 @@ const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, is
 	}
 
 	return (
-		<TableContainer component={Paper}>
+		<TableContainer component={Paper} sx={{boxShadow: '0 4px 10px rgba(0, 0, 0, 0.06)'}}>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
 				<TableHead>
 					<TableRow>

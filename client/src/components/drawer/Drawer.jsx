@@ -40,6 +40,7 @@ const openedMixin = (theme) => ({
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
     }),
+    boxShadow: '6px 0px 10px rgba(0, 0, 0, 0.06)',
     overflowX: 'hidden',
 });
 
@@ -48,6 +49,7 @@ const closedMixin = (theme) => ({
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
+    boxShadow: '6px 0px 10px rgba(0, 0, 0, 0.06)',
     overflowX: 'hidden',
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
