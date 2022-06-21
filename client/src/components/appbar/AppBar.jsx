@@ -6,6 +6,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import { COLORS } from '../../consts/consts';
+import SearchInput from '../search/SearchInput';
 
 
 const drawerWidth = 240;
@@ -49,6 +50,8 @@ const Appbar = ({ open, handleDrawerOpen }) => {
                 >
                     <MenuIcon />
                 </IconButton>
+                
+                <SearchInput/>
               
                 <IconButton sx={{color: COLORS.BLUE, position:'absolute', right:10}}><NotificationsIcon/></IconButton>
                 </Toolbar>
