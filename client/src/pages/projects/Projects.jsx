@@ -6,7 +6,7 @@ import Context from '../../index';
 import ModalDelete from '../../components/modaldelete/ModalDelete';
 import { destroyProject, updateProject } from '../../http/projectAPI';
 import ListHeader from '../../components/listheader/ListHeader';
-import ModalEdit from '../../components/modeledit/ModalEdit';
+import ModalEdit from '../../components/modaledit/ModalEdit';
 
 const Projects = observer (() => {
 	const { project, user } = useContext( Context );
