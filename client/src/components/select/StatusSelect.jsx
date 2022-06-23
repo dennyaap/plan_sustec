@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import { Box } from '@mui/material';
 import Context from '../../index';
 import { COLORS } from '../../consts/consts';
+import './style.css';
 
 
 export default function StatusSelect({ projectId, statusId, changeProjectStatus }) {
@@ -21,6 +22,7 @@ export default function StatusSelect({ projectId, statusId, changeProjectStatus 
         <Box sx={{ width: 140, }}>
             <FormControl fullWidth>
             <Select
+                    id='select'
                     value={currentStatus}
                     onChange={changeStatus}
                     variant='standard'
