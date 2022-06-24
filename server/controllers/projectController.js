@@ -41,9 +41,16 @@ class ProjectController {
 				offset, 
 				include: [
 					{ 
-						model: ProjectExecutor 
+						model: ProjectExecutor,
+						include: [
+							{
+								model: User,
+								attributes: ['fullName']
+							}
+						]
 					}
-				]
+				],
+				order: [['createdAt', 'DESC']]
 			}
 		);
         }
@@ -65,7 +72,7 @@ class ProjectController {
 						] 
 					}
 				],
-				order: [['updatedAt', 'DESC']]
+				order: [['createdAt', 'DESC']]
 			}
 		);
 		
@@ -79,9 +86,16 @@ class ProjectController {
 				offset, 
 				include: [
 					{ 
-						model: ProjectExecutor 
+						model: ProjectExecutor,
+						include: [
+							{
+								model: User,
+								attributes: ['fullName']
+							}
+						] 
 					}
-				]
+				],
+				order: [['createdAt', 'DESC']]
 			}
 		);
         }
@@ -95,6 +109,12 @@ class ProjectController {
 				include: [
 					{ 
 						model: ProjectExecutor,
+						include: [
+							{
+								model: User,
+								attributes: ['fullName']
+							}
+						]
 					}
 				],
 				order: [['createdAt', 'DESC']]

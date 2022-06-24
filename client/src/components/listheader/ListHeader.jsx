@@ -6,7 +6,7 @@ import { COLORS } from '../../consts/consts';
 import SortStatus from '../sortStatus/SortStatus';
 
 
-const ListHeader = ({ addProject }) => {
+const ListHeader = ({ addProject, currentSortStatus, changeSortStatus }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const openModal = () => {
@@ -19,7 +19,7 @@ const ListHeader = ({ addProject }) => {
 	return (
 		<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '26px' }}>
 
-		<SortStatus/>
+		<SortStatus currentSortStatus={currentSortStatus} changeSortStatus={changeSortStatus}/>
 
 		<Button variant="contained" 
 			onClick={ openModal }
