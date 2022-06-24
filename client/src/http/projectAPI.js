@@ -4,8 +4,8 @@ export const createProject = async ( project ) => {
 	const { data } = await $authHost.post('api/project', project);
 	return data;
 }
-export const fetchProjects = async (userId, limit, page) => {
-	const { data } = await $authHost.post('api/project/userProjects', {userId, limit, page});
+export const fetchProjects = async (userId, limit, page, statusId) => {
+	const { data } = await $authHost.post('api/project/userProjects', {userId, limit, page, statusId});
 	return data;
 }
 export const fetchStatuses = async () => {
