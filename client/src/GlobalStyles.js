@@ -5,7 +5,7 @@ export default function GlobalStyleOverrides() {
     typography: {
       fontFamily: [
        "'Poppins', sans-serif",
-      ].join(','),         
+      ].join(','), 
     //   body1: {
     //     fontFamily: "Arial, sans-serif",
     //   },

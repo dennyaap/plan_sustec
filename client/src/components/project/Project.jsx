@@ -8,8 +8,20 @@ import IconButton from '@mui/material/IconButton';
 import IconDelete from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+import { motion } from 'framer-motion';
 
-const Project = ({ project, index, openModal, openModalEdit, setSelectedProject }) => {
+
+const child = {
+	hidden: { 
+		x: -100 ,
+	},
+    show: { 
+		x: 0, 
+		transition: { type: "spring", stiffness: 80 } ,
+	}
+};
+
+const Project = ({ project, index, openModal, openModalEdit, setSelectedProject}) => {
 	const [ backgroundColorStatus, setBackgroundColor ] = useState('');
 	const [ projectStatus, setProjectStatus ] = useState(project.statusId);
 
@@ -38,16 +50,23 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject 
 		setSelectedProject(selectedProject);
 		openModalEdit();
 	}
-	
+
 
 	return (
 		<TableRow
+				component={motion.tr}
+				variants={child}
+				exit={{ scale: 1.1, x: 0, opacity: 0 }}
+				whileHover={{ scale: 1.01 }}
 				sx={{ 
+					cursor: 'pointer',
 					'&:last-child td, &:last-child th': { border: 0 },
-					backgroundColor: backgroundColorStatus
+					backgroundColor: backgroundColorStatus,
+					transition: 'all 0.05s ease-in-out',
+					background: '#fff'
 				}}
 				>
-				<TableCell align="center">
+				<TableCell align="center" component={motion.td}>
 					{ index + 1 }
 				</TableCell>
 				<TableCell align="center" sx={{color: COLORS.DARK_BLUE, fontWeight: 500, fontSize:'15px'}}>
