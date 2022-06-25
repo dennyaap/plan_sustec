@@ -14,6 +14,8 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
+import DateTime from '../dataTime/DateTime';
+
 function createData(name, calories, fat, carbs, protein, price) {
   return {
     name,
@@ -116,8 +118,8 @@ Row.propTypes = {
 };
 
 const tasks = [
-  createData('Купить 10 компьютеров apple', '12.06.22', 'Мария Вайз', 'Активна', '8.06.22'),
-  createData('Купить 10 мониторов apple', '14.06.22', 'Виктор Васаби', 'Выполнена', '6.06.22'),
+  createData('Купить 10 компьютеров apple', <DateTime/>, 'Мария Вайз', 'Активна', '8.06.22'),
+  createData('Купить 10 мониторов apple', <DateTime/>, 'Виктор Васаби', 'Выполнена', '6.06.22'),
 ];
 
 export default function TaskList() {
