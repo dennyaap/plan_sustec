@@ -12,7 +12,7 @@ import Context from '../../index';
 
 const SortStatus = observer (({ currentSortStatus, changeSortStatus }) => {
     const { project } = useContext(Context)
-
+    
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', px:1 }}>
             <Typography sx={{ height: '100%', fontSize: '14px', color: COLORS.DARK_GREY }}>Статус:</Typography>
