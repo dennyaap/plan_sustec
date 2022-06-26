@@ -22,8 +22,9 @@ export default function DateTime() {
             onChange={handleChange}
             renderInput={(params) => <TextField {...params}
             sx={{
-              width:180,
-              border:0
+              width:190,
+              backgroundColor:'#109CF1',
+              borderRadius:20,
             }}
              />
         }
