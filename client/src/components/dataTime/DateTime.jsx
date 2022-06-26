@@ -4,6 +4,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import ru from "date-fns/locale/ru";
+import './style.css';
 
 
 export default function DateTime() {
@@ -16,11 +17,14 @@ export default function DateTime() {
     return (
       <LocalizationProvider dateAdapter={AdapterDateFns} locale={ru}>
           <DateTimePicker
-            label="срок"
             value={value}
+            id='dtp'
             onChange={handleChange}
             renderInput={(params) => <TextField {...params}
-            sx={{width:240}}
+            sx={{
+              width:180,
+              border:0
+            }}
              />
         }
           />
