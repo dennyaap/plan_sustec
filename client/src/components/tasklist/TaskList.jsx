@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import DateTime from '../dataTime/DateTime';
+import DateTime from '../datePicker/DatePicker';
 
 function createData(name, calories, fat, carbs, protein, price) {
   return {
