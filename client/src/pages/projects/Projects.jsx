@@ -53,11 +53,16 @@ const Projects = observer (() => {
 		setIsOpenModalEdit(false);
 	}
 
-	const changeSortStatus = (status) => {
-		setOffsetProjects(getOffsetElements(1, limitProjects));
-		project.setProjects([]);
-		changePage({}, 1);
-		setCurrentSortStatus(status);
+	const changeSortStatus = (sortStatus) => {
+		setCurrentPage(1);
+		fetchProjects(user.currentUser.id, limitProjects, 1, sortStatus, project.searchValue ? project.searchValue : '')
+			.then((data) => {
+				project.setProjects(data.rows);
+				setOffsetProjects(getOffsetElements(1, limitProjects));
+				setCurrentSortStatus(sortStatus);
+				setCountPages( getCountPages(data.count, limitProjects) );
+				changeAlertMessage(data.count, sortStatus);
+			});
 	}
 
 
@@ -72,15 +77,15 @@ const Projects = observer (() => {
 		}
 	}
 
-	const changeAlertMessage = (countProjects) => {
+	const changeAlertMessage = (countProjects, sortStatus) => {
 		if(!countProjects) {
-			if(currentSortStatus == ''){
+			if(sortStatus == ''){
 				setAlertMessage('Создайте ваш первый проект')
 			} 
-			else if (currentSortStatus === 1) {
+			else if (sortStatus === 1) {
 				setAlertMessage('Активные проекты отсутствуют')
 			}
-			else if (currentSortStatus === 2) {
+			else if (sortStatus === 2) {
 				setAlertMessage('Выполните ваш первый проект')
 			}
 		} else {
@@ -103,15 +108,21 @@ const Projects = observer (() => {
 
 	}
 	const addProject = ({name, executors}) => {
+		setIsLoading(true);
 		createProject({ name, userId: user.currentUser.id, statusId: 1, projectExecutors: JSON.stringify(executors) })
 			.then( () => {
-				fetchProjects( user.currentUser.id, limitProjects, currentPage, currentSortStatus )
-					.then( data =>  {
-						project.setProjects(data.rows);		
-						changePage({}, 1);
-						setCountPages( getCountPages(data.count, limitProjects) );
-						changeAlertMessage(project.projects.length);
-					})
+				if(currentPage !== 1){
+					project.setProjects([]);
+					setCurrentPage(1);
+				} else {
+					let page = 1;
+					fetchProjects(user.currentUser.id, limitProjects, page, currentSortStatus, project.searchValue ? project.searchValue : '')
+						.then( (data) => {
+							project.setProjects(data.rows);
+							setCountPages( getCountPages(data.count, limitProjects) );
+							setOffsetProjects(getOffsetElements(page, limitProjects));
+						})
+				}
 			})
 	}
 	const editProject = (currentProject) => {
@@ -127,21 +138,34 @@ const Projects = observer (() => {
 
 	useEffect( () => {
 		setIsLoading(true);
-		fetchProjects( user.currentUser.id, limitProjects, currentPage, currentSortStatus )
-			.then( data =>  {
-				project.setProjects([...project.projects, ...data.rows] );
+		fetchProjects(user.currentUser.id, limitProjects, currentPage, currentSortStatus, project.searchValue ? project.searchValue : '')
+			.then( (data) => {
+				project.setProjects([...project.projects, ...data.rows]);
 				setCountPages( getCountPages(data.count, limitProjects) );
-				changeAlertMessage(data.count)
+				changeAlertMessage(data.count, currentSortStatus);
 			})
-			.finally(() => {setIsLoading(false)})
-	}, [currentPage, currentSortStatus] );
+			.finally(() => setIsLoading(false));
+		
+	}, [currentPage] );
+
+	useEffect( () => {
+		if(project.searchValue){
+			setIsLoading(true);
+			fetchProjects(user.currentUser.id, limitProjects, 1, currentSortStatus, project.searchValue ? project.searchValue : '')
+			.then( (data) => {
+				project.setProjects(data.rows);
+				setCountPages( getCountPages(data.count, limitProjects) );
+				changeAlertMessage(data.count, currentSortStatus);
+			})
+			.finally(() => setIsLoading(false));
+		}
+	}, [project.searchValue])
 
 	useEffect( () => {
 		fetchStatuses()
 			.then( data => project.setStatuses( data ))
 			.then( () => fetchRoles().then( data => project.setRoles( data )))
 	}, [])
-
 	
   	return (
 		<div>

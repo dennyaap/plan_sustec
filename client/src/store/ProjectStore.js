@@ -4,6 +4,7 @@ export default class ProjectStore {
     constructor() {
         this._projects = [];
 		this._statuses = [];
+		this._searchValue = '';
 		this._roles = [];
         makeAutoObservable(this);
     }
@@ -17,6 +18,9 @@ export default class ProjectStore {
 	setRoles(roles) {
 		this._roles = roles;
 	}
+	setSearchValue(searchValue) {
+		this._searchValue = searchValue;
+	}
 
 	get projects() {
 		return this._projects;
@@ -26,5 +30,8 @@ export default class ProjectStore {
 	}
 	get roles() {
 		return this._roles;
+	}
+	get searchValue() {
+		return this._searchValue;
 	}
 }

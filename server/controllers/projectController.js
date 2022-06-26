@@ -1,12 +1,13 @@
-const {Project, ProjectExecutor, User} = require('../models/models');
-// const uuid = require('uuid');
-// const path = require('path');
+const {Project, ProjectExecutor, User} = require('../models/models');;
 const ApiError = require('../error/ApiError');
+const sequelize = require('sequelize');
+
+const Op = sequelize.Op;
 
 class ProjectController {
     async create(req, res, next){
         try {
-            let { name, userId, statusId, projectExecutors } = req.body;
+            let { name, userId, statusId, projectExecutors, searchValue } = req.body;
             // const {img} = req.files;
             // let fileName = uuid.v4() + ".jpg";
             // img.mv(path.resolve(__dirname, '..', 'static', fileName));
@@ -30,97 +31,40 @@ class ProjectController {
         }
     }
     async getAll(req, res){
-        let {userId, statusId, limit, page} = req.body;
+        let {userId, statusId, limit, page, searchValue} = req.body;
         page = page || 1;
         limit = limit || 9;
         let offset = page * limit - limit;
         let projects;
-        if (!userId && !statusId) {
-            projects = await Project.findAndCountAll({
-				limit, 
-				offset, 
-				include: [
-					{ 
-						model: ProjectExecutor,
-						include: [
-							{
-								model: User,
-								attributes: ['fullName']
-							}
-						]
-					}
-				],
-				order: [['createdAt', 'DESC']]
-			}
-		);
-        }
-        if (userId && !statusId) {
-            projects = await Project.findAndCountAll({
-				where: {
-					userId
-				}, 
-				limit, 
-				offset, 
-				include: [
-					{ 
-						model: ProjectExecutor,
-						include: [
-							{
-								model: User,
-								attributes: ['fullName']
-							}
-						] 
-					}
-				],
-				order: [['createdAt', 'DESC']]
-			}
-		);
+
+		const filterUndefinedValues = (obj) =>
+			Object.fromEntries(
+				Object.entries(obj).filter(([, value]) => value !== undefined)
+			);
+
+		let where = filterUndefinedValues({userId, statusId});
+		where.name = {
+			[Op.like]: '%' + searchValue + '%'
+		}
 		
-        }
-        if (!userId && statusId) {
-            projects = await Project.findAndCountAll({
-				where: {
-					statusId
-				}, 
-				limit, 
-				offset, 
-				include: [
-					{ 
-						model: ProjectExecutor,
-						include: [
-							{
-								model: User,
-								attributes: ['fullName']
-							}
-						] 
-					}
-				],
-				order: [['createdAt', 'DESC']]
-			}
+        projects = await Project.findAndCountAll({
+			where,
+			limit, 
+			offset, 
+			include: [
+				{ 
+					model: ProjectExecutor,
+					include: [
+						{
+							model: User,
+							attributes: ['fullName']
+						}
+					]
+				}
+			],
+			order: [['createdAt', 'DESC']]
+		}
 		);
-        }
-        if (userId && statusId) {
-            projects = await Project.findAndCountAll({
-				where: {
-					userId, statusId
-				}, 
-				limit, 
-				offset, 
-				include: [
-					{ 
-						model: ProjectExecutor,
-						include: [
-							{
-								model: User,
-								attributes: ['fullName']
-							}
-						]
-					}
-				],
-				order: [['createdAt', 'DESC']]
-			}
-		);
-        }
         return res.json(projects);
     }
     async getOne(req, res){

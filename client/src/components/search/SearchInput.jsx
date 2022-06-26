@@ -3,48 +3,47 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 
-export default function SearchInput({placeholder}) {
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    // backgroundColor: alpha(theme.palette.common.black, 0.15),
+    marginLeft: 0,
+    color:'#90A0B7',
+    width: '800px',
+    // [theme.breakpoints.up('sm')]: {
+    //     marginLeft: theme.spacing(1),
+    //     width: 'auto',
+    // },
+}));
 
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        // backgroundColor: alpha(theme.palette.common.black, 0.15),
-        marginLeft: 0,
-        color:'#90A0B7',
-        width: '800px',
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        // transition: theme.transitions.create('width'),
+        width: '740px',
         // [theme.breakpoints.up('sm')]: {
-        //     marginLeft: theme.spacing(1),
-        //     width: 'auto',
+        //     width: '12ch',
+        //     '&:focus': {
+        //         width: '20ch',
+        //     },
         // },
-    }));
+    },
+}));
 
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            // transition: theme.transitions.create('width'),
-            width: '740px',
-            // [theme.breakpoints.up('sm')]: {
-            //     width: '12ch',
-            //     '&:focus': {
-            //         width: '20ch',
-            //     },
-            // },
-        },
-    }));
-
+const SearchInput = ({placeholder, changeSearchValue}) => {
     return (
         <Search>
             <SearchIconWrapper>
@@ -53,7 +52,10 @@ export default function SearchInput({placeholder}) {
             <StyledInputBase
                 placeholder={placeholder}
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={e => changeSearchValue(e.target.value)}
             />
         </Search>
     )
 }
+
+export default SearchInput;
