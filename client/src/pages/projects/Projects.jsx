@@ -37,6 +37,8 @@ const Projects = observer (() => {
 	}
 	const [ containerRef, isVisible ] = useElementOnScreen(currentPage, countPages, setCurrentPage, isLoading, options);
 
+	const [ projects, setCurrentProjects ] = useState([]);
+
 
 	const openModal = () => {
 		setIsOpen(true);
@@ -55,13 +57,13 @@ const Projects = observer (() => {
 
 	const changeSortStatus = (sortStatus) => {
 		if(currentPage > 1){
-			project.setProjects([]);
+			setCurrentProjects([]);
 			setCurrentPage(1);
 			setCurrentSortStatus(sortStatus);
 		} else {
 			fetchProjects(user.currentUser.id, limitProjects, 1, sortStatus, project.searchValue ? project.searchValue : '')
 			.then((data) => {
-				project.setProjects(data.rows);
+				setCurrentProjects(data.rows);
 				setOffsetProjects(getOffsetElements(1, limitProjects));
 				setCurrentSortStatus(sortStatus);
 				setCountPages( getCountPages(data.count, limitProjects) );
@@ -75,7 +77,7 @@ const Projects = observer (() => {
 		let numberPage = value;
 		
 		if (numberPage !== currentPage) {
-			project.setProjects([])
+			setCurrentProjects([])
 			window.scrollTo(0, 0);
 			setCurrentPage(value);
 			setOffsetProjects(getOffsetElements(value, limitProjects));
@@ -105,7 +107,7 @@ const Projects = observer (() => {
 			.then( () => {
 				fetchProjects( user.currentUser.id, limitProjects, currentPage, currentSortStatus )
 					.then( data =>  {
-						project.setProjects([...project.projects.filter(item => item.id !== selectedProject.id), ...data.rows.filter((projectItem) => !project.projects.find(item => item.id === projectItem.id))] );
+						setCurrentProjects([...projects.filter(item => item.id !== selectedProject.id), ...data.rows.filter((projectItem) => !projects.find(item => item.id === projectItem.id))] );
 						setCountPages( getCountPages(data.count, limitProjects) );
 						changeAlertMessage(data.count);
 					})
@@ -117,13 +119,13 @@ const Projects = observer (() => {
 		createProject({ name, userId: user.currentUser.id, statusId: 1, projectExecutors: JSON.stringify(executors) })
 			.then( () => {
 				if(currentPage !== 1){
-					project.setProjects([]);
+					setCurrentProjects([]);
 					setCurrentPage(1);
 				} else {
 					let page = 1;
 					fetchProjects(user.currentUser.id, limitProjects, page, currentSortStatus, project.searchValue ? project.searchValue : '')
 						.then( (data) => {
-							project.setProjects(data.rows);
+							setCurrentProjects(data.rows);
 							setCountPages( getCountPages(data.count, limitProjects) );
 							setOffsetProjects(getOffsetElements(page, limitProjects));
 						})
@@ -135,7 +137,7 @@ const Projects = observer (() => {
 			.then( () => {
 				fetchProjects( user.currentUser.id, limitProjects, currentPage, currentSortStatus )
 					.then( data =>  {
-						project.setProjects(data.rows);
+						setCurrentProjects(data.rows);
 					})
 			}
 		).finally( () => setIsLoading( false ) );
@@ -145,7 +147,7 @@ const Projects = observer (() => {
 		setIsLoading(true);
 		fetchProjects(user.currentUser.id, limitProjects, currentPage, currentSortStatus, project.searchValue ? project.searchValue : '')
 			.then( (data) => {
-				project.setProjects([...project.projects, ...data.rows]);
+				setCurrentProjects([...projects, ...data.rows]);
 				setCountPages( getCountPages(data.count, limitProjects) );
 				changeAlertMessage(data.count, currentSortStatus);
 			})
@@ -158,7 +160,7 @@ const Projects = observer (() => {
 			setIsLoading(true);
 			fetchProjects(user.currentUser.id, limitProjects, 1, currentSortStatus, project.searchValue ? project.searchValue : '')
 			.then( (data) => {
-				project.setProjects(data.rows);
+				setCurrentProjects(data.rows);
 				setCountPages( getCountPages(data.count, limitProjects) );
 				changeAlertMessage(data.count, currentSortStatus);
 			})
@@ -178,7 +180,7 @@ const Projects = observer (() => {
 			<ModalEdit isOpenModalEdit={isOpenModalEdit} closeModalEdit={closeModalEdit} setSelectedProject={ setSelectedProject } selectedProject={selectedProject} editProject={editProject}/>
 
 			<ListHeader addProject={ addProject } currentSortStatus={currentSortStatus} changeSortStatus={changeSortStatus}/>
-			<ProjectList isLoading={ isLoading } setSelectedProject={ setSelectedProject } openModal={ openModal } closeModal={ closeModal } openModalEdit={openModalEdit} offsetProjects={offsetProjects} alertMessage={alertMessage} />
+			<ProjectList projects={projects} isLoading={ isLoading } setSelectedProject={ setSelectedProject } openModal={ openModal } closeModal={ closeModal } openModalEdit={openModalEdit} offsetProjects={offsetProjects} alertMessage={alertMessage} />
 			
 			<Stack sx={{marginTop: 6}}>
 				<Pagination count={countPages} page={currentPage} onChange={changePage}/>

@@ -13,11 +13,11 @@ import { motion } from 'framer-motion';
 
 const child = {
 	hidden: { 
-		x: -100 ,
+		x: -80,
 	},
     show: { 
 		x: 0, 
-		transition: { type: "spring", stiffness: 80 } ,
+		transition: { type: "spring", stiffness: 85 } ,
 	}
 };
 

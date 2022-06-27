@@ -7,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Context from '../../index';
 import Project from '../project/Project';
 import { COLORS, PROJECT_TITLES } from '../../consts/consts';
 import { Box, Typography } from '@mui/material';
@@ -16,20 +15,13 @@ import SpinnerLoader from '../../components/UI/spinnerloader/SpinnerLoader';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const container = {
-	hidden: { opacity: 0 },
+	hidden: { transition: { staggerChildren: 0.04, staggerDirection: -1 }},
 	show: {
-	  opacity: 1,
-	  transition: {
-		delayChildren: 0.4,
-		staggerDirection: -1
-	  }
+		transition: { staggerChildren: 0.02, delayChildren: 0.1 }
 	}
 };
 
-
-const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, offsetProjects, isLoading, alertMessage }) => {
-	const { project } = useContext(Context);
-	
+const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, offsetProjects, isLoading, alertMessage, projects }) => {
 	return (
 		<Box>			
 			<TableContainer 
@@ -45,14 +37,14 @@ const ProjectList = observer(({ setSelectedProject, openModal, openModalEdit, of
 						}
 					</TableRow>
 				</TableHead>
-				{project.projects.length !== 0 && <TableBody 
+				{projects.length !== 0 && <TableBody 
 				component={motion.tbody}
 				variants={container}
 				initial='hidden'
 				animate='show'
 				>
 					<AnimatePresence >
-						{project.projects.map((project, index) =>
+						{projects.map((project, index) =>
 						<Project 
 							key={project.id}
 							project={project}

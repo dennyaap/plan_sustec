@@ -5,7 +5,6 @@ const useElementOnScreen = (currentPage, countPages, setCurrentPage, isLoading, 
     const [ isVisible, setIsVisible ] = useState(false);
 
     const callbackfunction = (entries) => {
-        console.log(currentPage)
         if(entries[0].isIntersecting && currentPage < countPages){
 			setCurrentPage(currentPage + 1);
 		}
