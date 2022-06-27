@@ -54,9 +54,12 @@ const Projects = observer (() => {
 	}
 
 	const changeSortStatus = (sortStatus) => {
-		setCurrentPage(1);
-		console.log(typeof(sortStatus));
-		fetchProjects(user.currentUser.id, limitProjects, 1, sortStatus, project.searchValue ? project.searchValue : '')
+		if(currentPage > 1){
+			project.setProjects([]);
+			setCurrentPage(1);
+			setCurrentSortStatus(sortStatus);
+		} else {
+			fetchProjects(user.currentUser.id, limitProjects, 1, sortStatus, project.searchValue ? project.searchValue : '')
 			.then((data) => {
 				project.setProjects(data.rows);
 				setOffsetProjects(getOffsetElements(1, limitProjects));
@@ -64,6 +67,7 @@ const Projects = observer (() => {
 				setCountPages( getCountPages(data.count, limitProjects) );
 				changeAlertMessage(data.count, sortStatus);
 			});
+		}
 	}
 
 
