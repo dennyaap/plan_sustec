@@ -39,7 +39,7 @@ class ProjectController {
 
 		const filterUndefinedValues = (obj) =>
 			Object.fromEntries(
-				Object.entries(obj).filter(([, value]) => value !== undefined)
+				Object.entries(obj).filter(([, value]) => value !== undefined && value !== '')
 			);
 
 		let where = filterUndefinedValues({userId, statusId});

@@ -55,6 +55,7 @@ const Projects = observer (() => {
 
 	const changeSortStatus = (sortStatus) => {
 		setCurrentPage(1);
+		console.log(typeof(sortStatus));
 		fetchProjects(user.currentUser.id, limitProjects, 1, sortStatus, project.searchValue ? project.searchValue : '')
 			.then((data) => {
 				project.setProjects(data.rows);
