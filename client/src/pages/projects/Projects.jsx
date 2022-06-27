@@ -75,13 +75,10 @@ const Projects = observer (() => {
 
 	const changePage = (event, value) => {
 		let numberPage = value;
-		
-		if (numberPage !== currentPage) {
-			setCurrentProjects([])
-			window.scrollTo(0, 0);
-			setCurrentPage(value);
-			setOffsetProjects(getOffsetElements(value, limitProjects));
-		}
+		setCurrentProjects([]);
+		window.scrollTo(0, 0);
+		setCurrentPage(numberPage);
+		setOffsetProjects(getOffsetElements(value, limitProjects));
 	}
 
 	const changeAlertMessage = (countProjects, sortStatus) => {
@@ -105,12 +102,13 @@ const Projects = observer (() => {
 		closeModal();
 		destroyProject( selectedProject.id )
 			.then( () => {
+				setIsLoading(true);
 				fetchProjects( user.currentUser.id, limitProjects, currentPage, currentSortStatus )
 					.then( data =>  {
 						setCurrentProjects([...projects.filter(item => item.id !== selectedProject.id), ...data.rows.filter((projectItem) => !projects.find(item => item.id === projectItem.id))] );
 						setCountPages( getCountPages(data.count, limitProjects) );
 						changeAlertMessage(data.count);
-					})
+					}).finally(() => setIsLoading(false))
 			});
 
 	}
