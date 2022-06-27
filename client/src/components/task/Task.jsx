@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import StatusSelect from '../select/StatusSelect';
+import TaskStatus from '../taskStatus/TaskStatus';
 import { COLORS, PROJECTS_ROUTE, PROJECT_STATUSES, TASKS_ROUTE } from '../../consts/consts';
 import { changeStatus } from '../../http/projectAPI';
 import IconButton from '@mui/material/IconButton';
@@ -10,6 +10,8 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+
+import DatePicker from '../datePicker/DatePicker';
 
 
 const child = {
@@ -22,35 +24,35 @@ const child = {
 	}
 };
 
-const Project = ({ project, index, openModal, openModalEdit, setSelectedProject}) => {
+const Task = ({ task, index, openModal, openModalEdit, setSelectedTask}) => {
 	const [ backgroundColorStatus, setBackgroundColor ] = useState('');
-	const [ projectStatus, setProjectStatus ] = useState(project.statusId);
+	const [ taskStatus, setTaskStatus ] = useState(task.statusId);
 
 	const navigate = useNavigate();
 
-	const changeProjectStatus = (data) => {
-		setProjectStatus(data.statusId);
+	const changeTaskStatus = (data) => {
+		setTaskStatus(data.statusId);
 		changeStatus(data);
 	}
 	const changeBackgroundColor = () => {
-		setBackgroundColor(PROJECT_STATUSES.find(status => status.id === projectStatus).color);
+		setBackgroundColor(PROJECT_STATUSES.find(status => status.id === taskStatus).color);
 	}
 	useEffect( () => {
 		changeBackgroundColor()
-	}, [projectStatus])
+	}, [taskStatus])
 
 	const parseDate = (date) => {
 		let parsedDate = new Date(date);
 		return parsedDate.toLocaleDateString();
 	}
 
-	const selectProject = (selectedProject) => {
-		setSelectedProject(selectedProject);
+	const selectTask = (selectedTask) => {
+		setSelectedTask(selectedTask);
 		openModal();
 	}
 	
-	const selectEditProject = (selectedProject) => {
-		setSelectedProject(selectedProject);
+	const selectEditTask = (selectedTask) => {
+		setSelectedTask(selectedTask);
 		openModalEdit();
 	}
 
@@ -72,26 +74,30 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject}
 				<TableCell align="center" component={motion.td}>
 					{ index + 1 }
 				</TableCell>
-				<TableCell align="center" sx={{color: COLORS.DARK_BLUE, fontWeight: 500, fontSize:'15px'}} onClick={ () => navigate(PROJECTS_ROUTE + '/' + project.id + TASKS_ROUTE)}>
-					{ project.name }
+				<TableCell align="center" sx={{color: COLORS.DARK_BLUE, fontWeight: 500, fontSize:'15px'}} onClick={ () => navigate(PROJECTS_ROUTE + '/' + task.id + TASKS_ROUTE)}>
+					{ task.name }
+				</TableCell>
+                <TableCell align="center" sx={{color: COLORS.DARK_GREY, fontWeight: 500, fontSize:'13px'}}>
+					  <DatePicker completedDate={parseDate(task.dateCompletion)}/>
 				</TableCell>
 				<TableCell align="center" sx={{color: COLORS.DARK_GREY, fontWeight: 500, fontSize:'13px'}}>
-					 { parseDate(project.createdAt)} 
+					 { parseDate(task.createdAt)} 
 				</TableCell>
 				<TableCell sx={{display: 'flex', justifyContent: 'center'}}>
-					<StatusSelect 
-						projectId={ project.id } 
-						statusId={ project.statusId } 
-						changeProjectStatus={ changeProjectStatus }
+					<TaskStatus 
+						taskId={ task.id } 
+						statusId={ task.statusId } 
+						changeTaskStatus={ changeTaskStatus }
 					/>
+                    
 				</TableCell>
 				<TableCell align='center'>
-					<IconButton onClick={ () => selectEditProject( project ) } >
+					<IconButton onClick={ () => selectEditTask( task ) } >
 						<EditIcon sx={{width:'20px',height:'20px'}}/>
 					</IconButton>
 				</TableCell>
 				<TableCell align='center'>
-					<IconButton sx={{ color: COLORS.RED }} onClick={ () => selectProject( project ) }>
+					<IconButton sx={{ color: COLORS.RED }} onClick={ () => selectTask( task ) }>
 						<IconDelete sx={{width:'20px',height:'20px'}}/>
 					</IconButton>
 				</TableCell>
@@ -99,4 +105,4 @@ const Project = ({ project, index, openModal, openModalEdit, setSelectedProject}
 	);
 }
 
-export default Project;
+export default Task;

@@ -9,8 +9,8 @@ import EventIcon from '@mui/icons-material/Event';
 import ru from "date-fns/locale/ru";
 import { COLORS } from '../../consts/consts';
 
-const DatePicker = ()=> {
-  const [ date, setDate ] = useState(Date.now());
+const DatePicker = ({ dateCompletion }) => {
+  const [ date, setDate ] = useState(dateCompletion);
 
   const handleChange = (newValue) => {
     setDate(newValue);
@@ -32,12 +32,15 @@ const DatePicker = ()=> {
         renderInput={(params) => <TextField
           variant="standard"
           sx={{
-            width:'205px',
-            padding: '10px 20px',
+            borderRadius: 60,
+                        width: 180,
+                        
+                        padding: '5px 15px',
             borderRadius: 20,
             backgroundColor: COLORS.BLUE,
             input: {
-              color: '#fff'
+              color: '#fff',
+              fontSize: 14,
             }
           }}
           {...params}

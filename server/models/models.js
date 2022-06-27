@@ -52,6 +52,7 @@ const ExecutorRole = sequelize.define('executor_role', {
 const TaskStatus = sequelize.define('task_status', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
+	color: {type: DataTypes.STRING, unique: true, allowNull: false},
 });
 
 // users

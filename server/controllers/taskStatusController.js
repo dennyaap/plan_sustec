@@ -2,8 +2,8 @@ const { TaskStatus } = require('../models/models');
 
 class TaskStatusController {
     async create(req, res){
-        const {name} = req.body;
-        const status = await TaskStatus.create({ name });
+        const {name, color} = req.body;
+        const status = await TaskStatus.create({ name, color });
         return res.json(status);
     }
     async getAll(req, res){

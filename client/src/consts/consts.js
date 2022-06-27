@@ -52,3 +52,27 @@ export const PROJECT_TITLES = [
 		nameCell: 'Удалить'
 	},
 ]
+
+export const TASK_TITLES = [
+	{
+		nameCell: '№'
+	},
+	{
+		nameCell: 'Название'
+	},
+	{
+		nameCell: 'Срок окончания'
+	},
+	{
+		nameCell: 'Дата создания'
+	},
+	{
+		nameCell: 'Статус'
+	},
+	{
+		nameCell: 'Редактировать'
+	},
+	{
+		nameCell: 'Удалить'
+	},
+]

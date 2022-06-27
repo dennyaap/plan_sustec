@@ -1,7 +1,8 @@
-const {Task, TaskExecutor} = require('../models/models');
-// const uuid = require('uuid');
-// const path = require('path');
+const {Task, TaskExecutor, User} = require('../models/models');
 const ApiError = require('../error/ApiError');
+
+const sequelize = require('sequelize');
+const Op = sequelize.Op;
 
 class TaskController {
     async create(req, res, next){
@@ -15,7 +16,7 @@ class TaskController {
 
 
             if(taskExecutors) {
-                executors = JSON.parse(taskExecutors); //данные через form data приходят в ввиде строки
+                executors = JSON.parse(taskExecutors);
                 executors.forEach(executor => {
                     TaskExecutor.create({
                         userId: executor.id,
@@ -31,23 +32,40 @@ class TaskController {
         }
     }
     async getAll(req, res){
-        let {projectId, statusId, limit, page} = req.query;
+        let {projectId, statusId, limit, page, searchValue} = req.body;
         page = page || 1;
         limit = limit || 9;
         let offset = page * limit - limit;
         let tasks;
-        if(!projectId && !statusId){
-            tasks = await Task.findAndCountAll({limit, offset});
-        }
-        if(projectId && !statusId){
-            tasks = await Task.findAndCountAll({where: {projectId}, limit, offset});
-        }
-        if(!projectId && statusId){
-            tasks = await Task.findAndCountAll({where: {statusId}, limit, offset});
-        }
-        if(projectId && statusId){
-            tasks = await Task.findAndCountAll({where: {projectId, statusId}, limit, offset});
-        }
+
+		const filterUndefinedValues = (obj) =>
+			Object.fromEntries(
+				Object.entries(obj).filter(([, value]) => value !== undefined && value !== '')
+			);
+
+		let where = filterUndefinedValues({projectId, statusId});
+		where.name = {
+			[Op.like]: '%' + searchValue + '%'
+		}
+		
+        tasks = await Task.findAndCountAll({
+			where,
+			limit, 
+			offset, 
+			include: [
+				{ 
+					model: TaskExecutor,
+					include: [
+						{
+							model: User,
+							attributes: ['fullName']
+						}
+					]
+				}
+			],
+			order: [['createdAt', 'DESC']]
+		}
+		);
         return res.json(tasks);
     }
     async getOne(req, res){

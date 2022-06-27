@@ -1,147 +1,66 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
+import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Task from '../task/Task';
+import { COLORS, TASK_TITLES } from '../../consts/consts';
+import { Box, Typography } from '@mui/material';
+import SpinnerLoader from '../../components/UI/spinnerloader/SpinnerLoader';
 
-import DateTime from '../datePicker/DatePicker';
+import { motion, AnimatePresence } from 'framer-motion';
 
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: 'Найти устройства на базе mac OSX',
-        customerId: 'Мария Вайб',
-        amount: 'checkbox',
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Виктор Васаби',
-        amount: 'checkbox',
-      },
-    ],
-  };
-}
-
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell >
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row" align='center'>
-          {row.name}
-        </TableCell>
-        <TableCell align="center">{row.calories}</TableCell>
-        <TableCell align="center">{row.fat}</TableCell>
-        <TableCell align="center">{row.carbs}</TableCell>
-        <TableCell align="center">{row.protein}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6} >
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Подзадачи
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Название</TableCell>
-                    <TableCell align="left">Исполнитель</TableCell>
-                    <TableCell align="left">Статус</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="left">{historyRow.amount}</TableCell>
-
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
-
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
+const container = {
+	hidden: { transition: { staggerChildren: 0.04, staggerDirection: -1 }},
+	show: {
+		transition: { staggerChildren: 0.02, delayChildren: 0.1 }
+	}
 };
 
-const tasks = [
-  createData('Купить 10 компьютеров apple', <DateTime />, 'Мария Вайз', 'Активна', '8.06.22'),
-  createData('Купить 10 мониторов apple', <DateTime />, 'Виктор Васаби', 'Выполнена', '6.06.22'),
-];
+const TaskList = observer(({ setSelectedTask, openModal, openModalEdit, offsetTasks, isLoading, alertMessage, tasks }) => {
+	return (
+		<Box>			
+			<TableContainer 
+				component={Paper} sx={{boxShadow: '0 4px 10px rgba(0, 0, 0, 0.06)', overflow: 'hidden', background: 'none'}} 
+			>
+			<Table sx={{ minWidth: 650 }} aria-label="simple table">
+				<TableHead sx={{ background: '#fff'}}>
+					<TableRow>
+						{
+							TASK_TITLES.map(({ nameCell }) => (
+								<TableCell key={nameCell} align={'center'} sx={{ color: COLORS.LIGHT_BLUE, letterSpacing: 1, fontSize:'13px' }}>{ nameCell }</TableCell>
+							))
+						}
+					</TableRow>
+				</TableHead>
+				{tasks.length !== 0 && <TableBody 
+				component={motion.tbody}
+				variants={container}
+				initial='hidden'
+				animate='show'
+				>
+					<AnimatePresence >
+						{tasks.map((task, index) =>
+						<Task 
+							key={task.id}
+							task={task}
+							index={offsetTasks++}
+							openModal={openModal}
+							openModalEdit={openModalEdit}
+							setSelectedTask={setSelectedTask}
+						/>)}
+					</AnimatePresence>
+				</TableBody>}
+			</Table>
+		</TableContainer>
+		{isLoading && <Box sx={{display: 'flex', justifyContent: 'center'}}><SpinnerLoader animation={ 'border' } style={{ marginTop: 20, width: 75, height: 75, color: COLORS.BLUE }}/></Box>}
+		{alertMessage && <Typography sx={{color: COLORS.DARK_GREY, display: 'flex', justifyContent: 'center', fontSize: 18, marginTop: 5, letterSpacing: 1}}>{ alertMessage }</Typography>}
+		</Box>
+	);
+});
 
-export default function TaskList() {
-  return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell align='center'>Название</TableCell>
-            <TableCell align="center">Крайний срок</TableCell>
-            <TableCell align="center">Постановщик</TableCell>
-            <TableCell align="center">Статус</TableCell>
-            <TableCell align="center">Дата создания</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tasks.map((task) => (
-            <Row key={task.name} row={task} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-}
+export default TaskList;

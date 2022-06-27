@@ -1,0 +1,59 @@
+import { useState, useContext, useEffect } from 'react'
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { Box } from '@mui/material';
+import Context from '../../index';
+import { COLORS } from '../../consts/consts';
+import './style.css';
+
+
+const TaskStatus = ({ projectId, statusId, changeTaskStatus }) => {
+	const { task } = useContext( Context );
+	const [ currentStatus, setStatus ] = useState(statusId);
+
+	const changeStatus = (e) => {
+		let statusId = e.target.value;
+		setStatus(statusId);
+		changeTaskStatus({ statusId , statusId })
+	}
+
+    return (
+        <Box sx={{ width: 140, }}>
+            <FormControl fullWidth>
+            <Select
+                    id='select'
+                    value={currentStatus}
+                    onChange={changeStatus}
+                    variant='standard'
+                    align='center'
+                    sx={{
+                        backgroundColor: task.statuses[currentStatus - 1].color,
+                        borderRadius: 60,
+                        width: 160,
+                        height: 40,
+                        fontSize:'14px',
+                        color: COLORS.WHITE,
+                        '&:before': {
+                            display:'none'
+                        },
+                        '&:after': {
+                            display:'none'
+                        },
+						'&:hover': {
+							opacity: '0.9'
+						},
+                    }}
+                >
+                    {
+                       task.statuses.map(({ name, id}) => (
+                            <MenuItem key={ name } value={ id } sx={{ display: id === 3 ? 'none' : ''}}>{ name }</MenuItem>
+                        ))
+                    }
+                </Select>
+            </FormControl>
+        </Box>
+    )
+}
+
+export default TaskStatus;
